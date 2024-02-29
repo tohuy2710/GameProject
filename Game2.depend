@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1709132702 source:c:\users\tohuy\huy\ltnc\game2\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"graphics.h"
+	"defs.h"
+
+1709132582 c:\users\tohuy\huy\ltnc\game2\graphics.h
+	<SDL.h>
+	<SDL_image.h>
+	"defs.h"
+
+1709132817 c:\users\tohuy\huy\ltnc\game2\defs.h
+
