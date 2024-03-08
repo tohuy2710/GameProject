@@ -63,16 +63,18 @@ public:
         return texture;
     }
 
-    void renderTexture(SDL_Texture *texture, int x, int y)
+    void renderTexture(SDL_Texture *texture, int x, int y, int width, int height, SDL_Renderer* renderer)
     {
         SDL_Rect dest;
 
         dest.x = x;
         dest.y = y;
-        SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
+        dest.w = width;
+        dest.h = height;
 
         SDL_RenderCopy(renderer, texture, NULL, &dest);
     }
+
 
     void blitRect(SDL_Texture *texture, SDL_Rect *src, int x, int y)
     {

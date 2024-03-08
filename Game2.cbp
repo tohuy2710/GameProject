@@ -32,9 +32,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Bot.h" />
 		<Unit filename="Graphics.h" />
+		<Unit filename="ammo.h" />
 		<Unit filename="defs.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="onTarget.h" />
+		<Unit filename="player.h" />
+		<Unit filename="scoreTarget.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

@@ -1,15 +1,45 @@
 # depslib dependency file v1.0
-1709132702 source:c:\users\tohuy\huy\ltnc\game2\main.cpp
-	<iostream>
+1709800409 source:c:\users\tohuy\huy\ltnc\game2\main.cpp
+	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
-	"graphics.h"
+	"Graphics.h"
 	"defs.h"
+	"ammo.h"
+	"Bot.h"
+	"onTarget.h"
+	"scoreTarget.h"
 
-1709132582 c:\users\tohuy\huy\ltnc\game2\graphics.h
+1709198192 c:\users\tohuy\huy\ltnc\game2\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	"defs.h"
 
 1709132817 c:\users\tohuy\huy\ltnc\game2\defs.h
+
+1709566916 c:\users\tohuy\huy\ltnc\game2\ammo.h
+	"Graphics.h"
+
+1709708339 c:\users\tohuy\huy\ltnc\game2\bot.h
+	<SDL.h>
+	<SDL_image.h>
+	"Graphics.h"
+	"ammo.h"
+
+1709708339 c:\users\tohuy\huy\ltnc\game2\ontarget.h
+	"Graphics.h"
+	"ammo.h"
+	"Bot.h"
+	"player.h"
+
+1709799325 c:\users\tohuy\huy\ltnc\game2\player.h
+	"Graphics.h"
+	"ammo.h"
+	"Bot.h"
+
+1709800442 c:\users\tohuy\huy\ltnc\game2\scoretarget.h
+	<SDL.h>
+	<SDL_image.h>
+	"Graphics.h"
+	"ammo.h"
 
