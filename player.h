@@ -19,16 +19,6 @@ public:
         player.rect.w = 150;
         player.rect.h = 150;
     }
-    void skillJ(Graphics& graphics)
-    {
-        SDL_Texture* jSkillTexture = graphics.loadTexture("assets/player/j.png");
-        SDL_Rect jSkillRect;
-        jSkillRect.y = rect.y - 20;
-        jSkillRect.w = SCREEN_WIDTH;
-        jSkillRect.h = 20;
-        graphics.renderTexture(jSkillTexture, 0, jSkillRect.y, jSkillRect.w, jSkillRect.h, graphics.renderer);
-
-    }
     void isLoss()
     {
         texture = NULL;

@@ -25,8 +25,8 @@ void Bullet::initBullet(Bullet& bullet,Graphics& graphics,SDL_Rect& player, int 
     {
     case 0: //for Player
         bullet.texture = graphics.loadTexture("assets/bullet/uet.png");
-        bullet.rect.w = 10;
-        bullet.rect.h = 10;
+        bullet.rect.w = 4;
+        bullet.rect.h = 20;
         bullet.rect.x = player.x + player.w/2 - bullet.rect.w;
         bullet.rect.y = player.y;
         bullet.speed = 20;

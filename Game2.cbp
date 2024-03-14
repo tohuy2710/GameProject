@@ -36,6 +36,7 @@
 		<Unit filename="Graphics.h" />
 		<Unit filename="ammo.h" />
 		<Unit filename="defs.h" />
+		<Unit filename="item.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="onTarget.h" />
 		<Unit filename="player.h" />

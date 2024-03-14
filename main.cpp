@@ -59,13 +59,23 @@ int main(int argc, char *argv[])
             {
                 quit = 1;
             }
-            else if (e.type == SDL_MOUSEBUTTONDOWN && player.alive)
+            else if (player.alive)
             {
-                if (e.button.button == SDL_BUTTON_LEFT)
+                if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
                 {
                     Bullet playerBullet;
                     playerBullet.initBullet(playerBullet, graphics, player.rect, 0);
                     playerBullets.push_back(playerBullet);
+                }
+                else if(e.type == SDL_KEYDOWN)
+                {
+                    switch(e.key.keysym.sym)
+                    {
+                    case SDLK_j:
+                        SDL_Texture* skillJ = graphics.loadTexture("assets/player/j.png");
+                        graphics.renderTexture(skillJ, 40, player.rect.y - 40, 460, 40, graphics.renderer);
+                        graphics.presentScene();
+                    }
                 }
             }
         }
@@ -79,7 +89,7 @@ int main(int argc, char *argv[])
             if (playerBullets[i].active)
             {
                 playerBullets[i].rect.y -= playerBullets[i].speed;
-                graphics.renderTexture(playerBullets[i].texture, playerBullets[i].rect.x, playerBullets[i].rect.y, 20, 20, graphics.renderer);
+                graphics.renderTexture(playerBullets[i].texture, playerBullets[i].rect.x, playerBullets[i].rect.y, playerBullets[i].rect.w, playerBullets[i].rect.h, graphics.renderer);
                 if (playerBullets[i].rect.x > SCREEN_WIDTH || playerBullets[i].rect.x + playerBullets[i].rect.w < 0)
                 {
                     playerBullets[i].active = false;
@@ -157,8 +167,6 @@ int main(int argc, char *argv[])
 
             else bulletInRange = false;
         }
-
-        scoreBoard.scoreReset();
 
         scoreBoard.moving();
         graphics.renderTexture(scoreBoard.texture, scoreBoard.rect.x, scoreBoard.rect.y, scoreBoard.rect.w, scoreBoard.rect.h, graphics.renderer);
