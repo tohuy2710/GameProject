@@ -33,8 +33,8 @@ void Bullet::initBullet(Bullet& bullet,Graphics& graphics,SDL_Rect& player, int 
         break;
     case 1: //for Bot
         bullet.texture = graphics.loadTexture("assets/bullet/thunder.png");
-        bullet.rect.w = 10;
-        bullet.rect.h = 10;
+        bullet.rect.w = 20;
+        bullet.rect.h = 20;
         bullet.rect.x = player.x + player.w/2 - bullet.rect.w;
         bullet.rect.y = player.y + player.h;
         bullet.speed = 20;

@@ -27,13 +27,17 @@ int main(int argc, char *argv[])
     Graphics graphics;
     graphics.init();
 
-    SDL_Texture* background = graphics.loadTexture("assets/background/bgr_1.jpg");
-    graphics.prepareScene(background);
+    ScrollingBackground background;
+    background.setTexture(graphics.loadTexture("assets/tet.png"));
 
+    Sprite playerSprite;
+    SDL_Texture* playerSpriteTexture = graphics.loadTexture(PLAYER_SPRITE_FILE);
+    playerSprite.init(playerSpriteTexture, PLAYER_FRAMES, PLAYER_CLIPS);
 
+//
     Player player;
     player.initPlayer(player, graphics);
-
+//
     Bots bot;
     bot.initBot(bot, graphics, 1, 100);
 
@@ -50,6 +54,7 @@ int main(int argc, char *argv[])
     Uint32 lastBotShotTime = 0;
     Uint32 botShotCooldown = 1000;
 
+    int speedScroll = 1;
 
     while (!quit)
     {
@@ -67,29 +72,30 @@ int main(int argc, char *argv[])
                     playerBullet.initBullet(playerBullet, graphics, player.rect, 0);
                     playerBullets.push_back(playerBullet);
                 }
-                else if(e.type == SDL_KEYDOWN)
-                {
-                    switch(e.key.keysym.sym)
-                    {
-                    case SDLK_j:
-                        SDL_Texture* skillJ = graphics.loadTexture("assets/player/j.png");
-                        graphics.renderTexture(skillJ, 40, player.rect.y - 40, 460, 40, graphics.renderer);
-                        graphics.presentScene();
-                    }
-                }
             }
         }
-
+//
         SDL_GetMouseState(&player.rect.x, &player.rect.y);
+        player.rect.x = player.rect.x - player.rect.w / 2;
+        player.rect.y = player.rect.y - player.rect.h / 2;
+        playerSprite.tick();
+//        graphics.prepareScene(background);
 
-        graphics.prepareScene(background);
+
+
+//
+
+        background.scroll(speedScroll);
+        graphics.renderBackground(background);
+//        graphics.renderSprite(player.rect.x, player.rect.y, playerSprite);
+//        graphics.presentScene();
 
         for (size_t i = 0; i < playerBullets.size(); i++)
         {
             if (playerBullets[i].active)
             {
                 playerBullets[i].rect.y -= playerBullets[i].speed;
-                graphics.renderTexture(playerBullets[i].texture, playerBullets[i].rect.x, playerBullets[i].rect.y, playerBullets[i].rect.w, playerBullets[i].rect.h, graphics.renderer);
+                graphics.renderTexture(playerBullets[i].texture, playerBullets[i].rect.x, playerBullets[i].rect.y, 4, 20, graphics.renderer);
                 if (playerBullets[i].rect.x > SCREEN_WIDTH || playerBullets[i].rect.x + playerBullets[i].rect.w < 0)
                 {
                     playerBullets[i].active = false;
@@ -116,9 +122,8 @@ int main(int argc, char *argv[])
         {
             cout << "loss\n";
             cout << "score: " << scoreBoard.score << endl;
-            background = graphics.loadTexture("assets/background/bgr_thua.jpg");
-            graphics.prepareScene(background);
-            player.isLoss();
+
+//            player.isLoss();
             player.alive = false;
         }
 
@@ -130,7 +135,6 @@ int main(int argc, char *argv[])
             if (bot.hp <= 0)
             {
                 bot.botBeKilled();
-                graphics.prepareScene(background);
                 graphics.presentScene();
             }
 
@@ -168,32 +172,29 @@ int main(int argc, char *argv[])
             else bulletInRange = false;
         }
 
+        scoreBoard.scoreReset();
+
         scoreBoard.moving();
         graphics.renderTexture(scoreBoard.texture, scoreBoard.rect.x, scoreBoard.rect.y, scoreBoard.rect.w, scoreBoard.rect.h, graphics.renderer);
 
-
-        player.rect.x = player.rect.x - player.rect.w / 2;
-        player.rect.y = player.rect.y - player.rect.h / 2;
-        SDL_RenderCopy(graphics.renderer, player.texture, NULL, &player.rect);
-
+//
+//        player.rect.x = player.rect.x - player.rect.w / 2;
+//        player.rect.y = player.rect.y - player.rect.h / 2;
+//        SDL_RenderCopy(graphics.renderer, player.texture, NULL, &player.rect);
+        graphics.renderSprite(player.rect.x, player.rect.y, playerSprite);
         graphics.presentScene();
     }
 
 
     //del
-    SDL_DestroyTexture( player.texture );
-    player.texture = NULL;
+
     SDL_DestroyTexture(bot.texture);
     bot.texture = NULL;
 
-    SDL_DestroyTexture( background );
-    background = NULL;
+//    SDL_DestroyTexture( background );
+//    background = NULL;
 
-
-    for(Bullet playerBullet : playerBullets)
-    {
-        playerBullet.texture = NULL;
-    }
+    SDL_DestroyTexture( background.texture );
     //quit
     graphics.quit();
 
