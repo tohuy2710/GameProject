@@ -6,8 +6,7 @@
 #include "defs.h"
 
 
-class Sprite {
-public:
+struct Sprite {
     SDL_Texture* texture;
     std::vector<SDL_Rect> clips;
     int currentFrame = 0;
@@ -34,10 +33,9 @@ public:
 };
 
 
-class ScrollingBackground {
-public:
+struct ScrollingBackground {
     SDL_Texture* texture;
-    int scrollingOffset = 0;
+    double scrollingOffset = 0;
     int width, height;
 
     void setTexture(SDL_Texture* _texture) {
@@ -45,7 +43,7 @@ public:
         SDL_QueryTexture(texture, NULL, NULL, &width, &height);
     }
 
-    void scroll(int distance) {
+    void scroll(double distance) {
         scrollingOffset += distance;
         if (scrollingOffset >= height) {
             scrollingOffset -= height;
@@ -55,9 +53,7 @@ public:
 
 
 
-class Graphics {
-
-public:
+struct Graphics {
 
     SDL_Renderer *renderer;
 	SDL_Window *window;
@@ -161,8 +157,17 @@ public:
         SDL_RenderCopy(renderer, sprite.texture, clip, &renderQuad);
     }
 
+    void renderInRect(SDL_Texture* texture, SDL_Rect& rect)
+    {
+        renderTexture(texture, rect.x, rect.y, rect.w, rect.h, renderer);
+    }
 
-
+    void renderFullscreen(SDL_Texture* texture)
+    {
+        SDL_Rect rect;
+        rect.x = 0; rect.y = 0; rect.w = 540; rect.h = 960;
+        renderInRect(texture, rect);
+    }
     void quit()
     {
         IMG_Quit();

@@ -5,28 +5,25 @@
 #include "ammo.h"
 #include "Bot.h"
 
-class Player
+struct Player
 {
-public:
-    SDL_Texture* texture;
     SDL_Rect rect;
-    int hp = 100;
+    int heart = 5;
     bool alive = true;
+    int score = 0;
 
-    void initPlayer(Player& player, Graphics& graphics)
+    void initPlayer(Player& player)
     {
-        player.texture = graphics.loadTexture("assets/player/test.png");
-        player.rect.w = 150;
-        player.rect.h = 150;
+        player.rect.w = 75;
+        player.rect.h = 75;
+        player.rect.x = 200;
+        player.rect.y = 400;
     }
     void isLoss()
     {
-        texture = NULL;
         rect.w = 0;
         rect.h = 0;
     }
-
-
 };
 
 #endif // PLAYER_H_INCLUDED

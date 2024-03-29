@@ -1,21 +1,21 @@
 #ifndef ITEM_H_INCLUDED
 #define ITEM_H_INCLUDED
 
-class item
+struct item
 {
-public:
-    SDL_Texture* texture;
     SDL_Rect rect;
     bool active = true;
-    int speed;
 
-    void initItem(Graphics& graphics, int typeOfItem)
+    void initStone(item& stone, int x, int y)
     {
-        switch(typeOfItem)
-        {
-        case 1:
-
-        }
+        stone.rect.x = x;
+        stone.rect.y = y;
+        stone.rect.w = 100;
+        stone.rect.h = 100;
+    }
+    void stone_moving()
+    {
+        rect.y += 5;
     }
 };
 

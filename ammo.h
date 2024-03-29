@@ -1,47 +1,37 @@
 #ifndef AMMO_H_INCLUDED
 #define AMMO_H_INCLUDED
-
+#include <bits/stdc++.h>
+#include "player.h"
 #include "Graphics.h"
+using namespace std;
 
-//typeOfBullet: left: 0, q: 1, w = 2, e = 3, r = 4
-
-class Bullet
+struct Bullet
 {
-public:
-    SDL_Texture* texture;
     SDL_Rect rect;
     bool active = true;
     int speed;
-
-    void initBullet(Bullet& bullet,Graphics& graphics,SDL_Rect& rect, int typeOfBullet);
 };
 
-void Bullet::initBullet(Bullet& bullet,Graphics& graphics,SDL_Rect& player, int typeOfBullet)
+
+void initPlayerBullets(Player &player, vector<Bullet> &vectorPlayerBullets)
 {
-
-    bullet.active = true;
-
-    switch (typeOfBullet)
+    Bullet playerBullets[3];
+    for(int i = 0; i < 3; i++)
     {
-    case 0: //for Player
-        bullet.texture = graphics.loadTexture("assets/bullet/uet.png");
-        bullet.rect.w = 4;
-        bullet.rect.h = 20;
-        bullet.rect.x = player.x + player.w/2 - bullet.rect.w;
-        bullet.rect.y = player.y;
-        bullet.speed = 20;
-        break;
-    case 1: //for Bot
-        bullet.texture = graphics.loadTexture("assets/bullet/thunder.png");
-        bullet.rect.w = 20;
-        bullet.rect.h = 20;
-        bullet.rect.x = player.x + player.w/2 - bullet.rect.w;
-        bullet.rect.y = player.y + player.h;
-        bullet.speed = 20;
-        break;
+        playerBullets[i].rect.w = 4;
+        playerBullets[i].rect.h = 10;
+        playerBullets[i].speed = 20;
     }
-
-
+    playerBullets[0].rect.x = player.rect.x + player.rect.w/2 - playerBullets[0].rect.w;
+    playerBullets[0].rect.y = player.rect.y;
+    playerBullets[1].rect.x = player.rect.x;
+    playerBullets[1].rect.y = player.rect.y + 20;
+    playerBullets[2].rect.x = player.rect.x + player.rect.w - playerBullets[2].rect.w;
+    playerBullets[2].rect.y = player.rect.y + 20;
+    for(int i = 0; i < 3; i++)
+    {
+        vectorPlayerBullets.push_back(playerBullets[i]);
+    }
 }
 
 #endif // AMMO_H_INCLUDED
