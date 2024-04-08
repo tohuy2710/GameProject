@@ -10,6 +10,8 @@ struct Sprite {
     SDL_Texture* texture;
     std::vector<SDL_Rect> clips;
     int currentFrame = 0;
+    int RenderBeat = 1;
+    int countBeat = 0;
 
     void init(SDL_Texture* _texture, int frames, const int _clips [][4]) {
         texture = _texture;
@@ -24,7 +26,12 @@ struct Sprite {
     }
     void tick()
     {
-        currentFrame = (currentFrame + 1) % clips.size();
+        countBeat++;
+        if(countBeat == RenderBeat)
+        {
+            currentFrame = (currentFrame + 1) % clips.size();
+            countBeat = 0;
+        }
     }
 
     const SDL_Rect* getCurrentClip() const {
@@ -168,6 +175,7 @@ struct Graphics {
         rect.x = 0; rect.y = 0; rect.w = 540; rect.h = 960;
         renderInRect(texture, rect);
     }
+
     void quit()
     {
         IMG_Quit();

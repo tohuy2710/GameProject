@@ -2,7 +2,7 @@
 #define ONTARGET_H_INCLUDED
 
 #include "Graphics.h"
-#include "ammo.h"
+#include "skill.h"
 #include "Bot.h"
 #include "player.h"
 
