@@ -1,9 +1,10 @@
 #include <bits/stdc++.h>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "Graphics.h"
 #include "defs.h"
-#include "skill.h"
+#include "ammo.h"
 #include "Bot.h"
 #include "item.h"
 #include "onTarget.h"
@@ -19,7 +20,7 @@ int main(int argc, char *argv[])
     SDL_Texture* menuBackground = graphics.loadTexture(MENU_BACKGROUND_FILE);
 
     Button buttonPlay, buttonHowToPlay;
-    initMenu(buttonPlay, buttonHowToPlay, graphics);
+    initMenu(buttonPlay, buttonHowToPlay);
 
     Sprite buttonPlaySprite;
     SDL_Texture* buttonPlaySpriteTexture = graphics.loadTexture(BUTTON_PLAY_SPRITE_FILE);
@@ -49,7 +50,7 @@ int main(int argc, char *argv[])
                 quit_menu = true;
             }
             SDL_GetMouseState(&posMouse_x, &posMouse_y);
-            if(inButton(buttonPlay, graphics, posMouse_x, posMouse_y))
+            if(inButton(buttonPlay, posMouse_x, posMouse_y))
             {
                 buttonPlaySprite.currentFrame = 1;
                 if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
@@ -62,7 +63,7 @@ int main(int argc, char *argv[])
             {
                 buttonPlaySprite.currentFrame = 0;
             }
-            if(inButton(buttonHowToPlay, graphics, posMouse_x, posMouse_y))
+            if(inButton(buttonHowToPlay, posMouse_x, posMouse_y))
             {
                 buttonHTPSprite.currentFrame = 1;
                 if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
@@ -129,10 +130,6 @@ int main(int argc, char *argv[])
         SDL_Texture* bossC_SpriteTexture = graphics.loadTexture(BOSS_C_SPRITE_FILE);
         bossC_Sprite.init(bossC_SpriteTexture, BOSS_C_FRAMES, BOSS_C_CLIPS);
 
-        Sprite stone_01_Sprite;
-        SDL_Texture* stone_01_SpriteTexture = graphics.loadTexture(STONE_01_SPRITE_FILE);
-        stone_01_Sprite.init(stone_01_SpriteTexture, STONE_01_FRAMES, STONE_01_CLIPS);
-
         SDL_Texture* playerBulletTexture = graphics.loadTexture(PLAYER_BULLET_FILE);
         SDL_Texture* playerSkillWTexture = graphics.loadTexture(PLAYER_SKILL_W_FILE);
         SDL_Texture* botBulletTexture = graphics.loadTexture(BOT_BULLET_FILE);
@@ -140,6 +137,23 @@ int main(int argc, char *argv[])
         SDL_Texture* bossBSkillTexture = graphics.loadTexture(BIGBOT_B_SKILL_FILE);
         SDL_Texture* bossCSkillTexture = graphics.loadTexture(BIGBOT_C_SKILL_FILE);
         SDL_Texture* bossCBulletSkillTexture = graphics.loadTexture(BIGBOT_C_BULLET_SKILL_FILE);
+        SDL_Texture* meteoriteTexture = graphics.loadTexture(METEORITE_FILE);
+
+        SDL_Texture* icon_Q_Texture = graphics.loadTexture(Q_ICON_FILE);
+        SDL_Texture* icon_Q_0_Texture = graphics.loadTexture(Q_0_ICON_FILE);
+        SDL_Texture* icon_Q_item_Texture = graphics.loadTexture(Q_ICON_ITEM_FILE);
+        SDL_Texture* icon_W_Texture = graphics.loadTexture(W_ICON_FILE);
+        SDL_Texture* icon_W_0_Texture = graphics.loadTexture(W_0_ICON_FILE);
+        SDL_Texture* icon_W_item_Texture = graphics.loadTexture(W_ICON_ITEM_FILE);
+        SDL_Texture* icon_E_Texture = graphics.loadTexture(E_ICON_FILE);
+        SDL_Texture* icon_E_0_Texture = graphics.loadTexture(E_0_ICON_FILE);
+        SDL_Texture* icon_E_item_Texture = graphics.loadTexture(E_ICON_ITEM_FILE);
+
+        SDL_Texture* icon_Cup_Texture = graphics.loadTexture(ICON_CUP_FILE);
+        SDL_Texture* icon_Heart_Texture = graphics.loadTexture(ICON_HEART_FILE);
+        SDL_Texture* icon_Score_Texture = graphics.loadTexture(ICON_SCORE_FILE);
+
+        SDL_Texture* boomTexture = graphics.loadTexture(BOOM_FILE);
 
         Player player;
         player.initPlayer(player);
@@ -149,6 +163,8 @@ int main(int argc, char *argv[])
         vector<Bullet> vectorPlayerBullets;
         vector<Bots> vectorBots_Skill_E;
         vector<Bullet> vectorBots_Skill_E_Skill;
+
+        vector<Bullet> vectorMeteorites;
 
         bool existBigBot = false;
         int numOfBots = 0;
@@ -160,6 +176,14 @@ int main(int argc, char *argv[])
         int countWaveBot = 0;
         bool waitNewWave = false;
 
+        SDL_Rect skill_Q_rect = {300, 0, 80, 80};
+        SDL_Rect skill_W_rect = {380, 0, 80, 80};
+        SDL_Rect skill_E_rect = {460, 0, 80, 80};
+
+        SDL_Rect icon_Score_Rect = {0, 10, 30, 30};
+        SDL_Rect icon_Heart_Rect = {0, 50, 30, 30};
+        SDL_Rect icon_Cup_Rect = {100, 10, 30, 30};
+
         int skill_Q_having = 3;
 
         int skill_W_having = 3;
@@ -169,6 +193,9 @@ int main(int argc, char *argv[])
         bool skill_E_using = false;
 
         Uint32 time_current;
+
+        Uint32 time_Meoterite_last;
+        Uint32 time_Meteorite_cooldown = 3000;
 
         Uint32 time_W_start;
         Uint32 time_W = 3000;
@@ -198,7 +225,7 @@ int main(int argc, char *argv[])
         bool   boss_B_waiting = false;
         int b_movingDegree = 0, b_radius = 50;
 
-
+        vector<Bullet> vectorItem;
 
         bool quitGame = false;
 
@@ -443,6 +470,61 @@ int main(int argc, char *argv[])
                     graphics.renderSprite(vectorBots_Skill_E[i].rect.x, vectorBots_Skill_E[i].rect.y, playerSkill_E_Sprite);
                 }
             }
+
+        //====load meteorite====
+        if(time_current - time_Meoterite_last >= time_Meteorite_cooldown)
+        {
+            initMeteorite(vectorMeteorites);
+            time_Meoterite_last = time_current;
+        }
+        for(size_t i = 0; i < vectorMeteorites.size(); i++)
+        {
+            if(vectorMeteorites[i].active)
+            {
+                vectorMeteorites[i].speed += vectorMeteorites[i].acceleration;
+                vectorMeteorites[i].rect.x += vectorMeteorites[i].speed*sin(vectorMeteorites[i].slope);
+                vectorMeteorites[i].rect.y += vectorMeteorites[i].speed*cos(vectorMeteorites[i].slope);
+                for(size_t j = 0; j < vectorPlayerBullets.size(); j++)
+                {
+                    if(vectorPlayerBullets[j].active && checkCollision(vectorMeteorites[i].rect, vectorPlayerBullets[j].rect))
+                    {
+                        cerr << "shot on meteo\n";
+                        vectorMeteorites[i].active = false;
+                        vectorPlayerBullets[j].active = false;
+                        graphics.renderInRect(boomTexture, vectorMeteorites[i].rect);
+
+                        if(vectorMeteorites[i].rect.w/2 >= 10)
+                        {
+                            initMeteoDebris(vectorMeteorites[i], vectorMeteorites);
+                        }
+
+                    }
+                }
+                graphics.renderInRect(meteoriteTexture, vectorMeteorites[i].rect);
+                if (vectorMeteorites[i].rect.x > SCREEN_HEIGHT)
+                {
+                    vectorMeteorites[i].active = false;
+                }
+                else if(skillQ.active)
+                {
+                    if(checkCollision(vectorMeteorites[i].rect, skillQ.rect))
+                    {
+                        vectorMeteorites[i].active = false;
+                        skillQ.hp--;
+                    }
+                }
+                else
+                {
+                    if (checkCollision(vectorMeteorites[i].rect, player.rect))
+                    {
+                        vectorMeteorites[i].active = false;
+                        player.heart -= vectorMeteorites[i].damage;
+                    }
+                }
+            }
+
+        }
+
         //====load bot Skill====
 
             for(size_t i = 0; i < vectorBotsBullets.size(); i++)
@@ -451,6 +533,7 @@ int main(int argc, char *argv[])
                 {
                     vectorBotsBullets[i].rect.y += vectorBotsBullets[i].speed;
                     graphics.renderInRect(botBulletTexture, vectorBotsBullets[i].rect);
+
                     if (vectorBotsBullets[i].rect.x > SCREEN_HEIGHT)
                     {
                         vectorBotsBullets[i].active = false;
@@ -529,7 +612,6 @@ int main(int argc, char *argv[])
                     {
                         if(vectorBigBotBullets[i].typeBullet == 'C')
                         {
-                            cerr << "run block\n";
                             initBoss_C_Bullet_Skill(vectorBigBotBullets[i].rect, vectorBigBotBullets);
                         }
                     }
@@ -544,6 +626,8 @@ int main(int argc, char *argv[])
                     numOfBots--;
                     player.score++;
                     vectorBots[i].alive = false;
+                    graphics.renderInRect(boomTexture, vectorBots[i].rect);
+                    initItem(vectorBots[i], vectorItem);
                     vectorBots.erase(vectorBots.begin() + i);
                     break;
                 }
@@ -626,12 +710,92 @@ int main(int argc, char *argv[])
                     BigBot.alive = false;
                     existBigBot = false;
                     numOfBots -= 1;
+                    graphics.renderInRect(boomTexture, BigBot.rect);
+                    initItem(BigBot, vectorItem);
                     cout << "Big Bot die\n";
+                }
+            }
+
+            for(size_t i = 0; i < vectorItem.size(); i++)
+            {
+                if(vectorItem[i].active)
+                {
+                    vectorItem[i].speed += vectorItem[i].acceleration;
+                    vectorItem[i].rect.x += vectorItem[i].speed*sin(vectorItem[i].slope);
+                    vectorItem[i].rect.y += vectorItem[i].speed*cos(vectorItem[i].slope);
+
+                    switch(vectorItem[i].typeBullet)
+                    {
+                    case 'Q':
+                        graphics.renderInRect(icon_Q_item_Texture, vectorItem[i].rect);
+                        break;
+                    case 'W':
+                        graphics.renderInRect(icon_W_item_Texture, vectorItem[i].rect);
+                        break;
+                    case 'E':
+                        graphics.renderInRect(icon_E_item_Texture, vectorItem[i].rect);
+                        break;
+                    }
+
+                    if(checkCollision(player.rect, vectorItem[i].rect))
+                    {
+                        switch(vectorItem[i].typeBullet)
+                        {
+                        case 'Q':
+                            if(skill_Q_having < 5)
+                            {
+                                skill_Q_having++;
+                            }
+                            break;
+                        case 'W':
+                            if(skill_W_having < 3)
+                            {
+                                skill_W_having++;
+                            }
+                            break;
+                        case 'E':
+                            if(skill_E_having < 2)
+                            {
+                                skill_E_having++;
+                            }
+                            break;
+                        }
+                        vectorItem[i].active = false;
+                    }
                 }
             }
 
             playerSprite.tick();
             graphics.renderSprite(player.rect.x, player.rect.y, playerSprite);
+
+            if(skill_Q_having)
+            {
+                graphics.renderInRect(icon_Q_Texture, skill_Q_rect);
+            }
+            else
+            {
+                graphics.renderInRect(icon_Q_0_Texture, skill_Q_rect);
+            }
+            if(skill_W_having)
+            {
+                graphics.renderInRect(icon_W_Texture, skill_W_rect);
+            }
+            else
+            {
+                graphics.renderInRect(icon_W_0_Texture, skill_W_rect);
+            }
+            if(skill_E_having)
+            {
+                graphics.renderInRect(icon_E_Texture, skill_E_rect);
+            }
+            else
+            {
+                graphics.renderInRect(icon_E_0_Texture, skill_E_rect);
+            }
+
+            graphics.renderInRect(icon_Cup_Texture, icon_Cup_Rect);
+            graphics.renderInRect(icon_Heart_Texture, icon_Heart_Rect);
+            graphics.renderInRect(icon_Score_Texture, icon_Score_Rect);
 
             graphics.presentScene();
         }

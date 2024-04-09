@@ -1,5 +1,5 @@
-#ifndef SKILL_H_INCLUDED
-#define SKILL_H_INCLUDED
+#ifndef AMMO_H_INCLUDED
+#define AMMO_H_INCLUDED
 #include <bits/stdc++.h>
 #include "player.h"
 #include "Bot.h"
@@ -11,8 +11,8 @@ struct Bullet
     SDL_Rect rect;
     bool active = true;
     char typeBullet = '0';
-    int speed;
-    int acceleration = 0;
+    double speed;
+    double acceleration = 0;
     double slope;
     int damage = 1;
 };
@@ -24,6 +24,37 @@ struct Shield
     int hp = 15;
 };
 
+void initMeteorite(vector<Bullet> &meteorites)
+{
+    Bullet meteo;
+    meteo.rect.w = rand()%60 + 20;
+    meteo.rect.h = meteo.rect.w;
+    meteo.rect.x = rand()%(540 - meteo.rect.w);
+    meteo.rect.y = 0;
+    meteo.damage = meteo.rect.w/10;
+    meteo.speed = 5;
+    meteo.acceleration = 0.3;
+    meteorites.push_back(meteo);
+}
+
+
+void initMeteoDebris(Bullet meteo, vector<Bullet> &vectorMeteorites)
+{
+    int numDebris = rand() % 4 + 4;
+    for(int i = 0; i < numDebris; i++)
+    {
+        Bullet debris;
+        debris.rect.x = meteo.rect.x;
+        debris.rect.y = meteo.rect.y;
+        debris.rect.w = meteo.rect.w*2/numDebris;
+        debris.rect.h = meteo.rect.h*2/numDebris;
+        debris.speed = rand() % 5 + 3;
+        debris.acceleration = 0;
+        debris.slope = 2*3.14 - i*2*3.14/numDebris;
+        debris.damage = debris.rect.x/10;
+        vectorMeteorites.push_back(debris);
+    }
+}
 
 void initPlayerBullets(Player &player, vector<Bullet> &vectorPlayerBullets)
 {
@@ -223,6 +254,54 @@ void initBoss_C_Bullet_Skill(SDL_Rect& rect, vector<Bullet> &vectorBigBotBullets
     botBullets.slope -= 36*3.14/180;
     }
 }
-#endif // SKILL_H_INCLUDED
+
+void initItem(Bots &bot, vector<Bullet> &vectorItem)
+{
+    int ranNum;
+    switch(bot.typeBot)
+    {
+    case 't':
+        ranNum = rand()%20 + 1;
+        break;
+    case 'a':
+        ranNum = rand()%5 + 1;
+        break;
+    case 'b':
+        ranNum = rand()%3 + 1;
+        break;
+    case 'c':
+        ranNum = 1;
+        break;
+    }
+    if(ranNum == 1)
+    {
+        int randomSkill = rand()%5 + 1;
+        Bullet item;
+        if(randomSkill <= 2)
+        {
+            item.typeBullet = 'Q';
+        }
+        else if(randomSkill <= 4)
+        {
+            item.typeBullet = 'W';
+        }
+        else
+        {
+            item.typeBullet = 'E';
+        }
+
+        item.rect.w = 50;
+        item.rect.h = 50;
+        item.rect.x = bot.rect.x + bot.rect.w/2 - item.rect.w/2;
+        item.rect.y = bot.rect.y + bot.rect.h/2 - item.rect.h/2;
+
+        item.speed = 5;
+        item.damage = 0;
+        vectorItem.push_back(item);
+    }
+
+}
+
+#endif // AMMO_H_INCLUDED
 
 

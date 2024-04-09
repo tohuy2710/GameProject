@@ -16,41 +16,43 @@ struct Button
 {
     SDL_Rect rect;
     bool mouseInButton = 0;
-    void initButton(Button &button, Graphics &graphics, SDL_Rect &rct)
+
+    void initButton(Button &button, SDL_Rect &rct)
     {
         rect = rct;
         button.mouseInButton = 0;
     }
 
-    void initPlay(Button &button, Graphics &graphics)
+    void initPlay(Button &button)
     {
         SDL_Rect rectPlay;
         rectPlay.x = 170;
         rectPlay.y = 600;
         rectPlay.w = 200;
         rectPlay.h = 100;
-        initButton(button, graphics, rectPlay);
+        initButton(button, rectPlay);
     }
 
-    void initHowToPlay(Button &button, Graphics &graphics)
+    void initHowToPlay(Button &button)
     {
         SDL_Rect rectPlay;
         rectPlay.x = 170;
         rectPlay.y = 700;
         rectPlay.w = 200;
         rectPlay.h = 100;
-        initButton(button, graphics, rectPlay);
+        initButton(button, rectPlay);
     }
+
 
 };
 
-void initMenu(Button &buttonPlay, Button &buttonHowToPlay, Graphics &graphics)
+void initMenu(Button &buttonPlay, Button &buttonHowToPlay)
 {
-    buttonPlay.initPlay(buttonPlay, graphics);
-    buttonHowToPlay.initHowToPlay(buttonHowToPlay, graphics);
+    buttonPlay.initPlay(buttonPlay);
+    buttonHowToPlay.initHowToPlay(buttonHowToPlay);
 }
 
-bool inButton(Button &button, Graphics &graphics, int posMouse_x, int posMouse_y)
+bool inButton(Button &button, int posMouse_x, int posMouse_y)
 {
     if(posMouse_x >= button.rect.x && posMouse_x <= button.rect.x + button.rect.w
         && posMouse_y >= button.rect.y && posMouse_y <= button.rect.y + button.rect.h)
@@ -59,5 +61,6 @@ bool inButton(Button &button, Graphics &graphics, int posMouse_x, int posMouse_y
     }
     return 0;
 }
+
 
 #endif // BUTTON_H_INCLUDED

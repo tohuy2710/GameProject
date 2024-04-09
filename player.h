@@ -2,7 +2,7 @@
 #define PLAYER_H_INCLUDED
 
 #include "Graphics.h"
-#include "skill.h"
+#include "ammo.h"
 #include "Bot.h"
 
 struct Player

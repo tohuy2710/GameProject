@@ -5,7 +5,7 @@
 #include <SDL_image.h>
 #include <bits/stdc++.h>
 #include "Graphics.h"
-#include "skill.h"
+#include "ammo.h"
 #include "player.h"
 using namespace std;
 
@@ -20,7 +20,7 @@ struct Bots
 void randomBotsPos(Bots &botTmp, map<int, int> &preBotsPos)
 {
     botTmp.rect.x = rand()%(SCREEN_WIDTH - botTmp.rect.w);
-    botTmp.rect.y = rand()%(SCREEN_HEIGHT/2);
+    botTmp.rect.y = rand()%(SCREEN_HEIGHT/2 - 80) + 80;
     for(auto it : preBotsPos)
         {
             if((botTmp.rect.x >= it.first)
@@ -44,7 +44,7 @@ void initBotsWave(vector<Bots>& vectorBots)
     botTmp.rect.w = 50;
     botTmp.rect.h = 50;
     botTmp.rect.x = rand()%(SCREEN_WIDTH - botTmp.rect.w);
-    botTmp.rect.y = rand()%(SCREEN_HEIGHT/2);
+    botTmp.rect.y = rand()%(SCREEN_HEIGHT/2 - 80) + 80;
 
     preBotsPos[botTmp.rect.x] = botTmp.rect.y;
 

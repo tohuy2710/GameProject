@@ -13,10 +13,7 @@ const char* BOT_SPRITE_FILE = "assets2/bot02Sprite.png";
 const char* BOSS_A_SPRITE_FILE = "assets2/bossASprite.png";
 const char* BOSS_B_SPRITE_FILE = "assets2/bossBSprite.png";
 const char* BOSS_C_SPRITE_FILE = "assets2/bossCSprite.png";
-
-const char* STONE_01_SPRITE_FILE = "assets2/stone_01.png";
-const char* STONE_02_SPRITE_FILE = "assets2/stone_02.png";
-const char* STONE_03_SPRITE_FILE = "assets2/stone_03.png";
+const char* METEORITE_FILE = "assets2/meteo.png";
 
 const char* BUTTON_PLAY_SPRITE_FILE = "assets2/playButtonSprite.png";
 const char* BUTTON_HTP_SPRITE_FILE = "assets2/htpButtonSprite.png";
@@ -32,6 +29,22 @@ const char* BIGBOT_C_BULLET_SKILL_FILE = "assets2/bossCBulletSkill.png";
 const char* PLAYER_SKILL_Q_SPRITE_FILE = "assets2/skill_Q.png";
 const char* PLAYER_SKILL_W_FILE = "assets2/skill_W.png";
 const char* PLAYER_SKILL_E_SPRITE_FILE = "assets2/skill_E.png";
+
+const char* BOOM_FILE = "assets2/boom.png";
+
+const char* Q_ICON_FILE = "assets2/q.png";
+const char* Q_0_ICON_FILE = "assets2/q_0.png";
+const char* W_ICON_FILE = "assets2/w.png";
+const char* W_0_ICON_FILE = "assets2/w_0.png";
+const char* E_ICON_FILE = "assets2/e.png";
+const char* E_0_ICON_FILE = "assets2/e_0.png";
+const char* Q_ICON_ITEM_FILE = "assets2/q_item.png";
+const char* W_ICON_ITEM_FILE = "assets2/w_item.png";
+const char* E_ICON_ITEM_FILE = "assets2/e_item.png";
+
+const char* ICON_HEART_FILE = "assets2/icon_heart.png";
+const char* ICON_SCORE_FILE = "assets2/icon_score.png";
+const char* ICON_CUP_FILE = "assets2/icon_cup.png";
 
 const int PLAYER_CLIPS[][4] = {
     {  0, 0, 75, 75},
