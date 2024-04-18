@@ -91,8 +91,6 @@ void movingCircle(SDL_Rect &rect, int& movingDegree, int r,
     movingDegree %= 360;
 }
 
-
-
 void movingHorizontalRandom(Bots &bot)
 {
     bool right = rand()%2;
@@ -111,6 +109,27 @@ void movingHorizontalRandom(Bots &bot)
     else
     {
         bot.rect.x -= 5;
+    }
+}
+
+void movingVerticalRandom(Bots &bot)
+{
+    bool down = rand()%2;
+    if(bot.rect.y + bot.rect.h >= SCREEN_HEIGHT/2)
+    {
+        down = 0;
+    }
+    if(bot.rect.x <= 80)
+    {
+        down = 1;
+    }
+    if(down)
+    {
+        bot.rect.y += 5;
+    }
+    else
+    {
+        bot.rect.y -= 5;
     }
 }
 

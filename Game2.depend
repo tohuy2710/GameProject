@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1712654205 source:c:\users\tohuy\huy\ltnc\game2\main.cpp
+1713166916 source:c:\users\tohuy\huy\ltnc\game2\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
+	<SDL_mixer.h>
 	"Graphics.h"
 	"defs.h"
 	"ammo.h"
@@ -13,21 +14,21 @@
 	"scoreTarget.h"
 	"button.h"
 
-1712589160 c:\users\tohuy\huy\ltnc\game2\graphics.h
+1713085913 c:\users\tohuy\huy\ltnc\game2\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
 	"defs.h"
 
-1712653729 c:\users\tohuy\huy\ltnc\game2\defs.h
+1713065970 c:\users\tohuy\huy\ltnc\game2\defs.h
 
-1712633785 c:\users\tohuy\huy\ltnc\game2\ammo.h
+1713063489 c:\users\tohuy\huy\ltnc\game2\ammo.h
 	<bits/stdc++.h>
 	"player.h"
 	"Bot.h"
 	"Graphics.h"
 
-1712652126 c:\users\tohuy\huy\ltnc\game2\bot.h
+1713064337 c:\users\tohuy\huy\ltnc\game2\bot.h
 	<SDL.h>
 	<SDL_image.h>
 	<bits/stdc++.h>
@@ -41,7 +42,7 @@
 	"Bot.h"
 	"player.h"
 
-1712547425 c:\users\tohuy\huy\ltnc\game2\player.h
+1713324093 c:\users\tohuy\huy\ltnc\game2\player.h
 	"Graphics.h"
 	"ammo.h"
 	"Bot.h"
@@ -54,7 +55,7 @@
 
 1712544750 c:\users\tohuy\huy\ltnc\game2\item.h
 
-1712651337 c:\users\tohuy\huy\ltnc\game2\button.h
+1712734604 c:\users\tohuy\huy\ltnc\game2\button.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>

@@ -37,7 +37,6 @@ void initMeteorite(vector<Bullet> &meteorites)
     meteorites.push_back(meteo);
 }
 
-
 void initMeteoDebris(Bullet meteo, vector<Bullet> &vectorMeteorites)
 {
     int numDebris = rand() % 4 + 4;
@@ -141,20 +140,15 @@ Shield initPlayerSkillQ(Player &player)
 
 void initBotBullets(vector<Bots> &vectorBots, vector<Bullet> &vectorBotsBullets)
 {
-    Bullet botBullets[5];
-    int distanceBullets = 0;
+    Bullet botBullets;
     for(size_t j = 0; j < vectorBots.size(); j++)
     {
-        for(int i = 0; i < 5; i++)
-        {
-            botBullets[i].rect.w = 10;
-            botBullets[i].rect.h = 10;
-            botBullets[i].rect.x = vectorBots[j].rect.x + vectorBots[j].rect.w/2;
-            botBullets[i].rect.y = vectorBots[j].rect.y + vectorBots[j].rect.h + distanceBullets;
-            botBullets[i].speed = 30;
-            distanceBullets += 3;
-            vectorBotsBullets.push_back(botBullets[i]);
-        }
+        botBullets.rect.w = 20;
+        botBullets.rect.h = 20;
+        botBullets.rect.x = vectorBots[j].rect.x + vectorBots[j].rect.w/2;
+        botBullets.rect.y = vectorBots[j].rect.y + vectorBots[j].rect.h;
+        botBullets.speed = 15;
+        vectorBotsBullets.push_back(botBullets);
     }
 }
 
@@ -277,17 +271,23 @@ void initItem(Bots &bot, vector<Bullet> &vectorItem)
     {
         int randomSkill = rand()%5 + 1;
         Bullet item;
-        if(randomSkill <= 2)
+        switch(randomSkill)
         {
+        case 1:
             item.typeBullet = 'Q';
-        }
-        else if(randomSkill <= 4)
-        {
+            break;
+        case 2:
             item.typeBullet = 'W';
-        }
-        else
-        {
+            break;
+        case 3:
             item.typeBullet = 'E';
+            break;
+        case 4:
+            item.typeBullet = 'H';
+            break;
+        case 5:
+            item.typeBullet = 'F';
+            break;
         }
 
         item.rect.w = 50;

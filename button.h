@@ -44,7 +44,15 @@ struct Button
     }
 
 
+
 };
+
+Button initButtonPlayAgain()
+{
+    Button playAgain;
+    playAgain.rect = {120, 700, 300, 100};
+    return playAgain;
+}
 
 void initMenu(Button &buttonPlay, Button &buttonHowToPlay)
 {
