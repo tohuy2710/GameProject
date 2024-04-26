@@ -8,7 +8,7 @@
 struct Player
 {
     SDL_Rect rect;
-    int heart = 200;
+    int heart = 100;
     bool alive = true;
     int score = 0;
 

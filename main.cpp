@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
 
     SDL_Texture* guideTexture = graphics.loadTexture(GUIDE_FILE);
 
+    TTF_Font* size_30 = graphics.loadFont("assets2/Minecraft.ttf", 30);
     TTF_Font* size_50 = graphics.loadFont("assets2/Minecraft.ttf", 50);
 
     SDL_Color orange = {255, 153, 51, 0};
@@ -50,6 +51,8 @@ int main(int argc, char *argv[])
     bool quit_menu = false;
     bool playAgain = false;
     bool readGuide = false;
+
+    bool quitPlayAgainMenu = false;
 
     int highScore;
     string namePlayer_highScore;
@@ -198,6 +201,10 @@ int main(int argc, char *argv[])
         SDL_Texture* bumbum_SpriteTexture = graphics.loadTexture(BUMBUM_SPRITE_FILE);
         bumbum_Sprite.init(bumbum_SpriteTexture, BUMBUM_FRAMES, BUMBUM_CLIPS);
 
+        Sprite warnSprite; warnSprite.RenderBeat = 4;
+        SDL_Texture* warnSpriteTexture = graphics.loadTexture(WARN_SPRITE_FILE);
+        warnSprite.init(warnSpriteTexture, WARN_FRAMES, WARN_CLIPS);
+
         SDL_Texture* playerBulletTexture = graphics.loadTexture(PLAYER_BULLET_FILE);
         SDL_Texture* playerSkillWTexture = graphics.loadTexture(PLAYER_SKILL_W_FILE);
         SDL_Texture* botBulletTexture = graphics.loadTexture(BOT_BULLET_FILE);
@@ -224,6 +231,11 @@ int main(int argc, char *argv[])
         SDL_Texture* icon_Score_Texture = graphics.loadTexture(ICON_SCORE_FILE);
 
         SDL_Texture* boomTexture = graphics.loadTexture(BOOM_FILE);
+
+        SDL_Texture* redHPBarTexture = graphics.loadTexture(RED_FILE);
+        SDL_Texture* whiteHPBarTexture = graphics.loadTexture(WHITE_FILE);
+
+        SDL_Texture* pauseTexture = graphics.loadTexture(BUTTON_PAUSE_FILE);
 
         Mix_Music* gamingTheme = graphics.loadMusic("assets2/gametheme.mp3");
         graphics.play(gamingTheme);
@@ -263,6 +275,7 @@ int main(int argc, char *argv[])
         SDL_Rect skill_Q_rect = {300, 0, 80, 80};
         SDL_Rect skill_W_rect = {380, 0, 80, 80};
         SDL_Rect skill_E_rect = {460, 0, 80, 80};
+        SDL_Rect pause_rect = {220, 0, 80, 80};
 
         SDL_Rect icon_Score_Rect = {0, 10, 30, 30};
         SDL_Rect icon_Heart_Rect = {0, 50, 30, 30};
@@ -321,16 +334,26 @@ int main(int argc, char *argv[])
         Uint32 time_die;
         Uint32 time_loadBumBum = 1000;
 
+        Uint32 time_pause = 0;
+
         bool   boss_B_waiting = false;
         int b_movingDegree = 0, b_radius = 50;
 
         vector<Bullet> vectorItem;
+
+        vector<SDL_Rect> hpBarWhite;
+        vector<SDL_Rect> hpBarRed;
+
 
         bool loss = false;
         bool quit = false;
 
         while(!loss)
         {
+            //====get Current time====
+
+            time_current = SDL_GetTicks() - time_pause;
+
             while(SDL_PollEvent(&e) != 0)
             {
                 if(e.type == SDL_QUIT)
@@ -378,6 +401,76 @@ int main(int argc, char *argv[])
                                 time_E_BotsSkill_start = time_current;
                             }
                             break;
+                        case SDLK_p:
+
+                            cerr << "P down\n";
+
+                            Sprite backMenuSprite;
+                            SDL_Texture* backMenuTexture = graphics.loadTexture(BACK_MENU_FILE);
+                            backMenuSprite.init(backMenuTexture, BACK_MENU_FRAMES, BACK_MENU_CLIPS);
+                            Button backMenu = initButtonBackMenu();
+
+                            Sprite pressToContinueSprite; pressToContinueSprite.RenderBeat = 15;
+                            SDL_Texture* pressToContinueTexture = graphics.loadTexture(PRESS_TO_CONTINUE_FILE);
+                            pressToContinueSprite.init(pressToContinueTexture, PRESS_TO_CONTINUE_FRAMES, PRESS_TO_CONTINUE_CLIPS);
+
+                            scoreTexture = graphics.renderText(playerScore.c_str(), size_50, orange);
+                            string yourScore = "Your Score: ";
+                            SDL_Texture* yourScoreTexture = graphics.renderText(yourScore.c_str(), size_30, white);
+                            string highScore = "High Score: ";
+                            SDL_Texture* highScoreTexture = graphics.renderText(highScore.c_str(), size_30, white);
+
+
+                            Uint32 time_startPause = SDL_GetTicks();
+                            bool pause = true;
+                            while(pause)
+                            {
+                                while(SDL_PollEvent(&e) != 0)
+                                {
+                                    if(e.type == SDL_QUIT)
+                                    {
+                                        quit = true;
+                                        playAgain = false;
+                                        loss = true;
+                                        pause = false;
+                                    }
+                                    else if(e.type == SDL_KEYDOWN)
+                                    {
+                                        pause = false;
+                                    }
+
+                                    SDL_GetMouseState(&posMouse_x, &posMouse_y);
+
+                                    if(inButton(backMenu, posMouse_x, posMouse_y))
+                                    {
+                                        backMenuSprite.currentFrame = 1;
+                                        if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+                                        {
+                                            pause = false;
+                                            loss = true;
+                                            quitPlayAgainMenu = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        backMenuSprite.currentFrame = 0;
+                                    }
+                                }
+
+                                background.scroll(1);
+                                graphics.renderBackground(background);
+                                graphics.renderTexture(highScoreTexture, 180, 410);
+                                graphics.renderTexture(highRankScoreTexture, 120, 460);
+                                graphics.renderTexture(scoreTexture, 250, 340);
+                                graphics.renderTexture(yourScoreTexture, 180, 290);
+
+                                graphics.renderSprite(backMenu.rect.x, backMenu.rect.y, backMenuSprite);
+                                graphics.renderSprite(0, 700, pressToContinueSprite); pressToContinueSprite.tick();
+                                graphics.presentScene();
+                            }
+
+                            time_pause += SDL_GetTicks() - time_startPause;
+                            break;
                         }
                     }
                     SDL_GetMouseState(&player.rect.x, &player.rect.y);
@@ -423,10 +516,6 @@ int main(int argc, char *argv[])
                 cerr << "render\n";
             }
 
-        //====get Current time====
-
-            time_current = SDL_GetTicks();
-
         //====time Wave====
             if((numOfBots == 0 && waitNewWave == false))
             {
@@ -449,6 +538,8 @@ int main(int argc, char *argv[])
 
                 time_lastBotShot = time_current;
                 time_boss_B_skill_start = time_current;
+
+                initHPBar_BigBot(hpBarWhite, hpBarRed, BigBot);
             }
 
             if(numOfBots == 0
@@ -466,13 +557,14 @@ int main(int argc, char *argv[])
 
                 initBoss_C_Skill(BigBot, vectorBigBotBullets);
                 time_lastBotShot = time_current;
+
+                initHPBar_BigBot(hpBarWhite, hpBarRed, BigBot);
             }
 
             if(numOfBots == 0
                && (countWaveBot%3==0 && countWaveBot >= 3)
                     && (existBigBot == false)
                         && (time_current - time_clearWave >= time_waveDelay))
-
             {
                 BigBot = initBoss_A();
 
@@ -485,6 +577,8 @@ int main(int argc, char *argv[])
                 initBoss_A_Skill(BigBot, vectorBigBotBullets);
                 cerr << "init Boss A\n";
                 time_lastBotShot = time_current;
+
+                initHPBar_BigBot(hpBarWhite, hpBarRed, BigBot);
             }
 
             if((numOfBots == 0
@@ -498,6 +592,8 @@ int main(int argc, char *argv[])
                 time_lastBotShot = time_current;
                 countWaveBot++;
                 waitNewWave = false;
+
+                initHPBar(hpBarWhite, hpBarRed, vectorBots);
             }
 
             if(time_current - time_lastBotShot >= time_cooldownBotShot && vectorBots.size() > 0)
@@ -742,10 +838,13 @@ int main(int argc, char *argv[])
             }
 
          //====load bot====
+
             for(size_t i = 0; i < vectorBots.size(); i++)
             {
                 if(vectorBots[i].hearts <= 0)
                 {
+                    hpBarRed.erase(hpBarRed.begin() + i);
+                    hpBarWhite.erase(hpBarWhite.begin() + i);
                     numOfBots--;
                     player.score++;
                     vectorBots[i].alive = false;
@@ -754,20 +853,38 @@ int main(int argc, char *argv[])
                     vectorBots.erase(vectorBots.begin() + i);
                     break;
                 }
+                else
+                {
+                    hpBarRed[i].w = (vectorBots[i].hearts*50/2);
+                    graphics.renderInRect(whiteHPBarTexture, hpBarWhite[i]);
+                    graphics.renderInRect(redHPBarTexture, hpBarRed[i]);
+                }
                 if(checkCollision(player.rect, vectorBots[i].rect))
                 {
                     player.heart--;
                 }
-            }
-
-            for(size_t i = 0; i < vectorBots.size(); i++)
-            {
                 botSprite.tick();
                 graphics.renderSprite(vectorBots[i].rect.x, vectorBots[i].rect.y, botSprite);
             }
 
             if(existBigBot && BigBot.alive)
             {
+                if(BigBot.hearts > 0)
+                {
+                    hpBarRed[0].w = (BigBot.hearts*BigBot.rect.w/BigBot.init_Hearts);
+                    hpBarRed[0].x = BigBot.rect.x;
+                    hpBarWhite[0].x = BigBot.rect.x;
+                    hpBarRed[0].y = BigBot.rect.y - 10;
+                    hpBarWhite[0].y = BigBot.rect.y - 10;
+                    graphics.renderInRect(whiteHPBarTexture, hpBarWhite[0]);
+                    graphics.renderInRect(redHPBarTexture, hpBarRed[0]);
+                }
+                else
+                {
+                    hpBarRed.erase(hpBarRed.begin());
+                    hpBarWhite.erase(hpBarWhite.begin());
+                }
+
                 switch (BigBot.typeBot)
                 {
                 case 'a':
@@ -779,7 +896,7 @@ int main(int argc, char *argv[])
                     }
                     if(bossA_Sprite.countBeat == 0)
                     {
-                        movingVerticalRandom(BigBot);
+                        movingHorizontalRandom(BigBot);
                     }
                     bossA_Sprite.tick();
                     graphics.renderSprite(BigBot.rect.x, BigBot.rect.y, bossA_Sprite);
@@ -797,15 +914,13 @@ int main(int argc, char *argv[])
                     }
                     if(time_current - time_boss_B_skill_start >= time_boss_B_skilling && (boss_B_waiting == false))
                     {
-                        cerr << "run this block 1\n";
                         time_boss_B_wait = time_current;
                         boss_B_waiting = true;
                     }
                     if((time_current - time_boss_B_wait >= time_boss_B_skill_cooldown) && (boss_B_waiting == true))
                     {
-                        cerr << "run block 2\n";
                         time_boss_B_skill_start = time_current;
-                        boss_B_waiting = false; cerr << "false \n";
+                        boss_B_waiting = false;
                     }
 
                     movingCircle(BigBot.rect, b_movingDegree, b_radius, 5, 170, 300);
@@ -819,7 +934,6 @@ int main(int argc, char *argv[])
                         graphics.play(bossCShot);
                         initBoss_C_Skill(BigBot, vectorBigBotBullets);
                         time_lastBotShot = time_current;
-                        cerr << "run this\n";
                     }
 
                     if((player.rect.y - (BigBot.rect.y + BigBot.rect.h) <= 100)
@@ -960,7 +1074,7 @@ int main(int argc, char *argv[])
 
             ranking = getRank(rankPlayerSprite, player.score);
             rankPlayerSprite.currentFrame = ranking.first;
-            graphics.renderSprite(150, 3, rankPlayerSprite);
+            graphics.renderSprite(125, 3, rankPlayerSprite);
             graphics.renderInRect(icon_Heart_Texture, icon_Heart_Rect);
             graphics.renderInRect(icon_Score_Texture, icon_Score_Rect);
 
@@ -999,6 +1113,14 @@ int main(int argc, char *argv[])
                 time_Meteorite_cooldown = 3000 - time_current%1000;
             }
 
+            if(time_Meteorite_cooldown <= 500 && time_Meoterite_last >= 200)
+            {
+                warnSprite.tick();
+                graphics.renderSprite(170, 200, warnSprite);
+            }
+
+            graphics.renderInRect(pauseTexture, pause_rect);
+
             graphics.presentScene();
         }
         //destroy all texture
@@ -1013,21 +1135,41 @@ int main(int argc, char *argv[])
             Button buttonPlayAgain = initButtonPlayAgain();
             Sprite buttonPlayAgainSprite;
             SDL_Texture* buttonPlayAgainSpriteTexture = graphics.loadTexture(BUTTON_PLAY_AGAIN_FILE);
+            SDL_Texture* signImageTexture = graphics.loadTexture(SIGN_FILE);
             buttonPlayAgainSprite.init(buttonPlayAgainSpriteTexture, BUTTON_PLAY_AGAIN_FRAMES, BUTTON_PLAY_AGAIN_CLIPS);
 
             TTF_Font* fontFor_Score_and_Heart = graphics.loadFont("assets2/Minecraft.ttf", 100);
+
             scoreTexture = graphics.renderText(playerScore.c_str(), fontFor_Score_and_Heart, orange);
 
-            bool quitThis = false;
+            string yourScore = "Your Score: ";
+            SDL_Texture* yourScoreTexture = graphics.renderText(yourScore.c_str(), size_30, white);
+
+            pair<int, string> rank_now = getRank(rankSprite, player.score);
+            SDL_Texture* yourRankTexture = graphics.renderText(rank_now.second.c_str(), size_30, white);
+
+            string signName = "", preSignName = "";
+            SDL_Texture* signNameTexture = graphics.renderText(signName.c_str(), size_50, white);
+
+            SDL_StartTextInput();
+
             int posMouse_x, posMouse_y;
 
-            while(!quitThis)
+            while(!quitPlayAgainMenu)
             {
                 while(SDL_PollEvent(&e) != 0)
                 {
                     if(e.type == SDL_QUIT)
                     {
-                        quitThis = true;
+                        quitPlayAgainMenu = true;
+                    }
+                    else if(e.type == SDL_TEXTINPUT && signName.length() < 12)
+                    {
+                        signName += e.text.text;
+                    }
+                    else if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_BACKSPACE && signName.length() > 0)
+                    {
+                        signName.pop_back();
                     }
                     SDL_GetMouseState(&posMouse_x, &posMouse_y);
                     if(inButton(buttonPlayAgain, posMouse_x, posMouse_y))
@@ -1036,7 +1178,7 @@ int main(int argc, char *argv[])
                         if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
                         {
                             playAgain = true;
-                            quitThis = true;
+                            quitPlayAgainMenu = true;
                         }
                     }
                     else
@@ -1044,11 +1186,33 @@ int main(int argc, char *argv[])
                         buttonPlayAgainSprite.currentFrame = 0;
                     }
                 }
-                graphics.renderTexture(scoreTexture, 100, 100);
+
+                if(signName != preSignName)
+                {
+                    signNameTexture = graphics.renderText(signName.c_str(), size_30, white);
+                    preSignName = signName;
+                }
+
                 background.scroll(1);
                 graphics.renderBackground(background);
+                graphics.renderTexture(yourScoreTexture, 200, 200);
+                graphics.renderTexture(scoreTexture, 230, 240);
+                graphics.renderSprite(170, 280, rankSprite);
+                graphics.renderTexture(yourRankTexture, 230, 450);
+                graphics.renderTexture(signImageTexture, 70, 550);
+                graphics.renderTexture(signNameTexture, 200, 580);
                 graphics.renderSprite(buttonPlayAgain.rect.x, buttonPlayAgain.rect.y, buttonPlayAgainSprite);
                 graphics.presentScene();
+            }
+
+            SDL_StopTextInput();
+            if(player.score > highScore)
+            {
+                ofstream file(HIGH_SCORE_FILE);
+                if(file.is_open())
+                {
+                    file << player.score << endl << signName;
+                }
             }
         }
     }

@@ -147,7 +147,7 @@ void initBotBullets(vector<Bots> &vectorBots, vector<Bullet> &vectorBotsBullets)
         botBullets.rect.h = 20;
         botBullets.rect.x = vectorBots[j].rect.x + vectorBots[j].rect.w/2;
         botBullets.rect.y = vectorBots[j].rect.y + vectorBots[j].rect.h;
-        botBullets.speed = 15;
+        botBullets.speed = 8;
         vectorBotsBullets.push_back(botBullets);
     }
 }
@@ -184,7 +184,7 @@ void initBoss_B_Skill(SDL_Rect& rect, vector<Bullet> &vectorBigBotBullets)
     botBullets.slope = 360*3.14/180;
     botBullets.acceleration = 1;
     botBullets.typeBullet = 'B';
-    botBullets.damage = 1;
+    botBullets.damage = 2;
 
     for(int i = 0; i < 24; i++)
     {

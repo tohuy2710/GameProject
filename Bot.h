@@ -15,48 +15,44 @@ struct Bots
     int hearts = 1;
     bool alive = true;
     char typeBot = 't';
+    int init_Hearts = 1;
 };
 
-void randomBotsPos(Bots &botTmp, map<int, int> &preBotsPos)
-{
-    botTmp.rect.x = rand()%(SCREEN_WIDTH - botTmp.rect.w);
-    botTmp.rect.y = rand()%(SCREEN_HEIGHT/2 - 80) + 80;
-    for(auto it : preBotsPos)
-        {
-            if((botTmp.rect.x >= it.first)
-                   && (botTmp.rect.x <= (it.first + botTmp.rect.w))
-                    && (botTmp.rect.y >= it.second)
-                         && (botTmp.rect.y <= (it.second + botTmp.rect.h)))
-            {
-                Bots tmpBot = botTmp;
-                randomBotsPos(tmpBot, preBotsPos);
-            }
+void randomBotsPos(Bots &botTmp, map<int, int> &preBotsPos) {
+    botTmp.hearts = 2;
+    botTmp.init_Hearts = 2;
+    botTmp.rect.x = rand() % (SCREEN_WIDTH - botTmp.rect.w);
+    botTmp.rect.y = rand() % (SCREEN_HEIGHT / 2 - 80) + 80;
+
+    for (auto it : preBotsPos) {
+        if (botTmp.rect.x >= it.first - botTmp.rect.w &&
+            botTmp.rect.x <= it.first + botTmp.rect.w &&
+            botTmp.rect.y >= it.second - botTmp.rect.h &&
+            botTmp.rect.y <= it.second + botTmp.rect.h) {
+            randomBotsPos(botTmp, preBotsPos);
+            return;
         }
-}
-
-void initBotsWave(vector<Bots>& vectorBots)
-{
-    int numberOfBotsInit = rand()%6 + 6;
-
-    map<int, int> preBotsPos;
-
-    Bots botTmp;
-    botTmp.rect.w = 50;
-    botTmp.rect.h = 50;
-    botTmp.rect.x = rand()%(SCREEN_WIDTH - botTmp.rect.w);
-    botTmp.rect.y = rand()%(SCREEN_HEIGHT/2 - 80) + 80;
-
-    preBotsPos[botTmp.rect.x] = botTmp.rect.y;
-
-    vectorBots.push_back(botTmp);
-
-    for(int i = 0; i < numberOfBotsInit - 1; i++)
-    {
-        randomBotsPos(botTmp, preBotsPos);
-        preBotsPos[botTmp.rect.x] = botTmp.rect.y;
-        vectorBots.push_back(botTmp);
     }
 }
+
+void initBotsWave(vector<Bots>& vectorBots) {
+    int numberOfBotsInit = rand() % 6 + 6;
+    map<int, int> preBotsPos;
+
+    for (int i = 0; i < numberOfBotsInit; i++) {
+        Bots botTmp;
+        botTmp.rect.w = 50;
+        botTmp.rect.h = 50;
+
+        // Generate random position for the bot
+        randomBotsPos(botTmp, preBotsPos);
+
+
+        vectorBots.push_back(botTmp);
+        preBotsPos[botTmp.rect.x] = botTmp.rect.y;
+    }
+}
+
 
 Bots initBoss_A()
 {
@@ -66,6 +62,7 @@ Bots initBoss_A()
     boss.rect.h = 100;
     boss.rect.x = SCREEN_WIDTH/2 - boss.rect.w/2;
     boss.hearts = 30;
+    boss.init_Hearts = 30;
     boss.typeBot = 'a';
     return boss;
 }
@@ -78,6 +75,7 @@ Bots initBoss_B()
     boss.rect.h = 175;
     boss.rect.x = SCREEN_WIDTH/2 - boss.rect.w/2;
     boss.hearts = 60;
+    boss.init_Hearts = 60;
     boss.typeBot = 'b';
     return boss;
 }
@@ -119,7 +117,7 @@ void movingVerticalRandom(Bots &bot)
     {
         down = 0;
     }
-    if(bot.rect.x <= 80)
+    if(bot.rect.y <= 80)
     {
         down = 1;
     }
@@ -141,15 +139,41 @@ Bots initBoss_C()
     boss.rect.x = SCREEN_WIDTH/2 - boss.rect.w/2;
     boss.rect.y = 300;
     boss.hearts = 100;
+    boss.init_Hearts = 100;
     boss.typeBot = 'c';
     return boss;
 }
 
+void initHPBar(vector<SDL_Rect>& hpBarWhite, vector<SDL_Rect>& hpBarRed, vector<Bots>& bots)
+{
+    for(Bots bot : bots)
+    {
+        SDL_Rect tmp;
+        tmp.x = bot.rect.x;
+        tmp.y = bot.rect.y - 10;
+        tmp.h = 10;
+        tmp.w = 50;
+
+        hpBarWhite.push_back(tmp);
+
+        tmp.w = (bot.hearts/2)*50;
+
+        hpBarRed.push_back(tmp);
+    }
+}
 
 
+void initHPBar_BigBot(vector<SDL_Rect>& hpBarWhite, vector<SDL_Rect>& hpBarRed, Bots bigBot)
+{
+    SDL_Rect tmp;
+    tmp.x = bigBot.rect.x;
+    tmp.y = bigBot.rect.y - 10;
+    tmp.w = bigBot.rect.w;
+    tmp.h = 10;
 
-
-
+    hpBarWhite.push_back(tmp);
+    hpBarRed.push_back(tmp);
+}
 
 
 

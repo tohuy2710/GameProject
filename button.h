@@ -54,6 +54,13 @@ Button initButtonPlayAgain()
     return playAgain;
 }
 
+Button initButtonBackMenu()
+{
+    Button backMenu;
+    backMenu.rect = {170,600, 200, 100};
+    return backMenu;
+}
+
 void initMenu(Button &buttonPlay, Button &buttonHowToPlay)
 {
     buttonPlay.initPlay(buttonPlay);

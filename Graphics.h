@@ -40,7 +40,7 @@ struct Sprite {
     }
 };
 
-std::pair<int, std::string> getRank(Sprite rankSrite, int score)
+std::pair<int, std::string> getRank(Sprite& rankSrite, int score)
 {
     std::pair<int, std::string> res = {0, "None"};
 
@@ -68,6 +68,7 @@ std::pair<int, std::string> getRank(Sprite rankSrite, int score)
     {
         res = {6, "Legendary"};
     }
+    rankSrite.currentFrame = res.first;
     return res;
 }
 

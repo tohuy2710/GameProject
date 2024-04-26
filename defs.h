@@ -18,6 +18,9 @@ const char* METEORITE_FILE = "assets2/meteo.png";
 const char* BUTTON_PLAY_SPRITE_FILE = "assets2/playButtonSprite.png";
 const char* BUTTON_HTP_SPRITE_FILE = "assets2/htpButtonSprite.png";
 const char* BUTTON_PLAY_AGAIN_FILE = "assets2/playAgain_button.png";
+const char* PRESS_TO_CONTINUE_FILE = "assets2/press_ctn.png";
+const char* BACK_MENU_FILE = "assets2/back_menu.png";
+const char* BUTTON_PAUSE_FILE = "assets2/pause.png";
 const char* GUIDE_FILE = "assets2/guideTheme.png";
 
 const char* PLAYER_BULLET_FILE = "assets2/player_laser.png";
@@ -54,6 +57,10 @@ const char* RANK_FILE = "assets2/rank.png";
 const char* RANK_PLAYER_FILE = "assets2/rank_player.png";
 
 const char* WAIT_SPRITE_FILE = "assets2/wait.png";
+const char* WARN_SPRITE_FILE = "assets2/meteorShowerWarn_Sprite.png";
+const char* SIGN_FILE = "assets2/sign.png";
+const char* RED_FILE = "assets2/red.png";
+const char* WHITE_FILE = "assets2/white.png";
 
 const int PLAYER_CLIPS[][4] = {
     {  0, 0, 75, 75},
@@ -186,6 +193,14 @@ const int BUTTON_HTP_CLIPS[][4] = {
     {  0, 0, 200, 100},
     { 200, 0, 200, 100},};
 
+const int BACK_MENU_CLIPS[][4] = {
+    {  0, 0, 200, 100},
+    { 200, 0, 200, 100},};
+
+const int PRESS_TO_CONTINUE_CLIPS[][4] = {
+    {  0, 0, 540, 50},
+    { 0, 50, 540, 50},};
+
 const int BUTTON_PLAY_AGAIN_CLIPS[][4] = {
     {  0, 0, 300, 100},
     { 300, 0, 300, 100},};
@@ -211,6 +226,10 @@ const int WAIT_CLIPS[][4] = {
     {  0, 0, 540, 100},
     {  540, 0, 540, 100},};
 
+const int WARN_CLIPS[][4] = {
+    {  0, 0, 200, 200},
+    {  200, 0, 200, 200},};
+
 const int PLAYER_FRAMES = sizeof(PLAYER_CLIPS)/sizeof(int)/4;
 const int PLAYER_SKILL_Q_FRAMES = sizeof(PLAYER_SKILL_Q_CLIPS)/sizeof(int)/4;
 const int PLAYER_SKILL_E_FRAMES = sizeof(PLAYER_SKILL_E_CLIPS)/sizeof(int)/4;
@@ -226,5 +245,8 @@ const int BUMBUM_FRAMES = sizeof(BUMBUM_CLIPS)/sizeof(int)/4;
 const int RANK_FRAMES = sizeof(RANK_CLIPS)/sizeof(int)/4;
 const int RANK_PLAYER_FRAMES = sizeof(RANK_PLAYER_CLIPS)/sizeof(int)/4;
 const int WAIT_FRAMES = sizeof(WAIT_CLIPS)/sizeof(int)/4;
+const int WARN_FRAMES = sizeof(WARN_CLIPS)/sizeof(int)/4;
+const int BACK_MENU_FRAMES = sizeof(BACK_MENU_CLIPS)/sizeof(int)/4;
+const int PRESS_TO_CONTINUE_FRAMES = sizeof(PRESS_TO_CONTINUE_CLIPS)/sizeof(int)/4;
 
 #endif // DEFS_H_INCLUDED
