@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1714142334 source:c:\users\tohuy\huy\ltnc\game2\main.cpp
+1714492480 source:c:\users\tohuy\huy\ltnc\game2\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -14,13 +14,13 @@
 	"scoreTarget.h"
 	"button.h"
 
-1713534163 c:\users\tohuy\huy\ltnc\game2\graphics.h
+1714234501 c:\users\tohuy\huy\ltnc\game2\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
 	"defs.h"
 
-1714104573 c:\users\tohuy\huy\ltnc\game2\defs.h
+1714491076 c:\users\tohuy\huy\ltnc\game2\defs.h
 
 1714103781 c:\users\tohuy\huy\ltnc\game2\ammo.h
 	<bits/stdc++.h>
@@ -55,7 +55,7 @@
 
 1712544750 c:\users\tohuy\huy\ltnc\game2\item.h
 
-1714105591 c:\users\tohuy\huy\ltnc\game2\button.h
+1714491384 c:\users\tohuy\huy\ltnc\game2\button.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>

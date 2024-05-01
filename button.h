@@ -43,8 +43,35 @@ struct Button
         initButton(button, rectPlay);
     }
 
+    void initHighScore(Button &button)
+    {
+        SDL_Rect rectPlay;
+        rectPlay.x = 170;
+        rectPlay.y = 800;
+        rectPlay.w = 200;
+        rectPlay.h = 100;
+        initButton(button, rectPlay);
+    }
 
+    void init_Choose_Aircraft_Pre(Button &button)
+    {
+        SDL_Rect rectPlay;
+        rectPlay.x = 120;
+        rectPlay.y = 300;
+        rectPlay.w = 50;
+        rectPlay.h = 200;
+        initButton(button, rectPlay);
+    }
 
+        void init_Choose_Aircraft_Next(Button &button)
+    {
+        SDL_Rect rectPlay;
+        rectPlay.x = 370;
+        rectPlay.y = 300;
+        rectPlay.w = 50;
+        rectPlay.h = 200;
+        initButton(button, rectPlay);
+    }
 };
 
 Button initButtonPlayAgain()
@@ -54,17 +81,27 @@ Button initButtonPlayAgain()
     return playAgain;
 }
 
-Button initButtonBackMenu()
+Button initButtonNewGame()
 {
-    Button backMenu;
-    backMenu.rect = {170,600, 200, 100};
-    return backMenu;
+    Button newGame;
+    newGame.rect = {170,650, 300, 100};
+    return newGame;
 }
 
-void initMenu(Button &buttonPlay, Button &buttonHowToPlay)
+Button initButtonReturnMenu()
+{
+    Button returnMenu;
+    returnMenu.rect = {170, 800, 300, 100};
+    return returnMenu;
+}
+
+void initMenu(Button &buttonPlay, Button &buttonHowToPlay, Button &buttonHighScore, Button &buttonPre, Button &buttonNext)
 {
     buttonPlay.initPlay(buttonPlay);
     buttonHowToPlay.initHowToPlay(buttonHowToPlay);
+    buttonHighScore.initHighScore(buttonHighScore);
+    buttonPre.init_Choose_Aircraft_Pre(buttonPre);
+    buttonNext.init_Choose_Aircraft_Next(buttonNext);
 }
 
 bool inButton(Button &button, int posMouse_x, int posMouse_y)

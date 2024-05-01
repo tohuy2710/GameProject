@@ -8,7 +8,10 @@ const char* WINDOW_TITLE = "Game";
 const char* MENU_BACKGROUND_FILE = "assets2/gameMenuBackground.png";
 const char* BACKGROUND_FILE = "assets2/background.jpg";
 
-const char* PLAYER_SPRITE_FILE = "assets2/tests.png";
+const char* PLAYER_SPRITE_FILE_1 = "assets2/aircraft_1.png";
+const char* PLAYER_SPRITE_FILE_2 = "assets2/aircraft_2.png";
+const char* PLAYER_SPRITE_FILE_3 = "assets2/aircraft_3.png";
+const char* PLAYER_SPRITE_FILE_4 = "assets2/aircraft_4.png";
 const char* BOT_SPRITE_FILE = "assets2/bot02Sprite.png";
 const char* BOSS_A_SPRITE_FILE = "assets2/bossASprite.png";
 const char* BOSS_B_SPRITE_FILE = "assets2/bossBSprite.png";
@@ -16,11 +19,17 @@ const char* BOSS_C_SPRITE_FILE = "assets2/bossCSprite.png";
 const char* METEORITE_FILE = "assets2/meteo.png";
 
 const char* BUTTON_PLAY_SPRITE_FILE = "assets2/playButtonSprite.png";
+const char* CHOOSE_AIRCRAFT_SPRITE_FILE = "assets2/choose_aircraft_sprite.png";
 const char* BUTTON_HTP_SPRITE_FILE = "assets2/htpButtonSprite.png";
+const char* BUTTON_HIGH_SCORE_FILE = "assets2/highScore_button.png";
 const char* BUTTON_PLAY_AGAIN_FILE = "assets2/playAgain_button.png";
+const char* BUTTON_PRE_FILE = "assets2/pre.png";
+const char* BUTTON_NEXT_FILE = "assets2/next.png";
+const char* BUTTON_RETURN_MENU_FILE = "assets2/returnMenu.png";
 const char* PRESS_TO_CONTINUE_FILE = "assets2/press_ctn.png";
-const char* BACK_MENU_FILE = "assets2/back_menu.png";
+const char* NEW_GAME_FILE = "assets2/newGame.png";
 const char* BUTTON_PAUSE_FILE = "assets2/pause.png";
+const char* HIGH_SCORE_PLAYERS_BOX_FILE = "assets2/highScore_players.png";
 const char* GUIDE_FILE = "assets2/guideTheme.png";
 
 const char* PLAYER_BULLET_FILE = "assets2/player_laser.png";
@@ -61,6 +70,13 @@ const char* WARN_SPRITE_FILE = "assets2/meteorShowerWarn_Sprite.png";
 const char* SIGN_FILE = "assets2/sign.png";
 const char* RED_FILE = "assets2/red.png";
 const char* WHITE_FILE = "assets2/white.png";
+
+
+const int CHOOSE_AIRCRAFT_CLIPS[][4] = {
+    {  0, 0, 200, 200},
+    {200, 0, 200, 200},
+    {400, 0, 200, 200},
+    {600, 0, 200, 200},};
 
 const int PLAYER_CLIPS[][4] = {
     {  0, 0, 75, 75},
@@ -189,11 +205,19 @@ const int BUTTON_PLAY_CLIPS[][4] = {
     {  0, 0, 200, 100},
     { 200, 0, 200, 100},};
 
+const int BUTTON_RETURN_MENU_CLIPS[][4] = {
+    {  0, 0, 200, 100},
+    { 200, 0, 200, 100},};
+
+const int BUTTON_HIGH_SCORE_CLIPS[][4] = {
+    {  0, 0, 200, 100},
+    { 200, 0, 200, 100},};
+
 const int BUTTON_HTP_CLIPS[][4] = {
     {  0, 0, 200, 100},
     { 200, 0, 200, 100},};
 
-const int BACK_MENU_CLIPS[][4] = {
+const int NEW_GAME_CLIPS[][4] = {
     {  0, 0, 200, 100},
     { 200, 0, 200, 100},};
 
@@ -240,13 +264,16 @@ const int BOSS_C_FRAMES = sizeof(BOSS_C_CLIPS)/sizeof(int)/4;
 const int STONE_01_FRAMES = sizeof(STONE_01_CLIPS)/sizeof(int)/4;
 const int BUTTON_PLAY_FRAMES = sizeof(BUTTON_PLAY_CLIPS)/sizeof(int)/4;
 const int BUTTON_HTP_FRAMES = sizeof(BUTTON_HTP_CLIPS)/sizeof(int)/4;
+const int BUTTON_HIGH_SCORE_FRAMES = sizeof(BUTTON_HIGH_SCORE_CLIPS)/sizeof(int)/4;
 const int BUTTON_PLAY_AGAIN_FRAMES = sizeof(BUTTON_PLAY_AGAIN_CLIPS)/sizeof(int)/4;
+const int BUTTON_RETURN_MENU_FRAMES = sizeof(BUTTON_RETURN_MENU_CLIPS)/sizeof(int)/4;
 const int BUMBUM_FRAMES = sizeof(BUMBUM_CLIPS)/sizeof(int)/4;
 const int RANK_FRAMES = sizeof(RANK_CLIPS)/sizeof(int)/4;
 const int RANK_PLAYER_FRAMES = sizeof(RANK_PLAYER_CLIPS)/sizeof(int)/4;
 const int WAIT_FRAMES = sizeof(WAIT_CLIPS)/sizeof(int)/4;
 const int WARN_FRAMES = sizeof(WARN_CLIPS)/sizeof(int)/4;
-const int BACK_MENU_FRAMES = sizeof(BACK_MENU_CLIPS)/sizeof(int)/4;
+const int NEW_GAME_FRAMES = sizeof(NEW_GAME_CLIPS)/sizeof(int)/4;
 const int PRESS_TO_CONTINUE_FRAMES = sizeof(PRESS_TO_CONTINUE_CLIPS)/sizeof(int)/4;
+const int CHOOSE_AIRCRAFT_FRAMES = sizeof(CHOOSE_AIRCRAFT_CLIPS)/sizeof(int)/4;
 
 #endif // DEFS_H_INCLUDED

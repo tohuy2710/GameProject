@@ -72,6 +72,32 @@ std::pair<int, std::string> getRank(Sprite& rankSrite, int score)
     return res;
 }
 
+void readRankFile(std::pair<int, std::string>& highScore_rank, std::vector<std::pair<std::string, std::string>>& highScore, Sprite& rankSrite)
+{
+    std::ifstream file("highScore.csv");
+    if(file.is_open())
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            std::pair<std::string, std::string> tmp;
+            getline(file, tmp.first, ',');
+            getline(file, tmp.second);
+            highScore.push_back(tmp);
+        }
+    }
+
+    for(int i = 0; i < 5; i++)
+    {
+        std::cerr << highScore[i].first << highScore[i].second;
+    }
+
+    int highestScore = std::stoi(highScore[0].second);
+    highScore_rank = getRank(rankSrite, highestScore);
+    rankSrite.currentFrame = highScore_rank.first;
+    file.close();
+}
+
+
 struct ScrollingBackground {
     SDL_Texture* texture;
     double scrollingOffset = 0;
