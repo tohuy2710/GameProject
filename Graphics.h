@@ -72,6 +72,10 @@ std::pair<int, std::string> getRank(Sprite& rankSrite, int score)
     return res;
 }
 
+bool customSort(const std::pair<std::string, int> &a, const std::pair<std::string, int> &b) {
+    return a.second < b.second;
+}
+
 void readRankFile(std::pair<int, std::string>& highScore_rank, std::vector<std::pair<std::string, std::string>>& highScore, Sprite& rankSrite)
 {
     std::ifstream file("highScore.csv");
@@ -85,16 +89,37 @@ void readRankFile(std::pair<int, std::string>& highScore_rank, std::vector<std::
             highScore.push_back(tmp);
         }
     }
-
-    for(int i = 0; i < 5; i++)
+    else
     {
-        std::cerr << highScore[i].first << highScore[i].second;
+        std::cerr << "error opening 'highScore.csv' to read! \n";
     }
 
     int highestScore = std::stoi(highScore[0].second);
     highScore_rank = getRank(rankSrite, highestScore);
     rankSrite.currentFrame = highScore_rank.first;
     file.close();
+}
+
+void writeRankFile(std::vector<std::pair<std::string, std::string>>& highScore)
+{
+    auto customSort = [](const std::pair<std::string, std::string> &a, const std::pair<std::string, std::string> &b) {
+        return stoi(a.second) > stoi(b.second);
+    };
+
+    std::ofstream file("highScore.csv");
+    if(file.is_open())
+    {
+        std::sort(highScore.begin(), highScore.end(), customSort);
+        int numRecords = std::min(static_cast<int>(highScore.size()), 5);
+        for(int i = 0; i < numRecords; i++)
+        {
+            file << highScore[i].first << ',' << highScore[i].second << std::endl;
+        }
+    }
+    else
+    {
+        std::cerr << "error opening 'highScore.csv' to write! \n";
+    }
 }
 
 

@@ -3,7 +3,7 @@
 
 const int SCREEN_WIDTH = 540;
 const int SCREEN_HEIGHT = 960; //540 960
-const char* WINDOW_TITLE = "Game";
+const char* WINDOW_TITLE = "Chua nghi ra ten";
 
 const char* MENU_BACKGROUND_FILE = "assets2/gameMenuBackground.png";
 const char* BACKGROUND_FILE = "assets2/background.jpg";

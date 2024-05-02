@@ -78,7 +78,6 @@ int main(int argc, char *argv[])
 
         bool quitPlayAgainMenu = false;
 
-        ///////////
         pair<int, string> highScore_rank;
         vector<pair<string, string>> highScore;
 
@@ -90,7 +89,6 @@ int main(int argc, char *argv[])
             highScore_text_name[i] = graphics.renderText(highScore[i].first.c_str(), size_30, white);
             highScore_text_score[i] = graphics.renderText(highScore[i].second.c_str(), size_30, white);
         }
-        ///////////
 
 
         SDL_Event e;
@@ -224,14 +222,13 @@ int main(int argc, char *argv[])
         {
             Mix_FreeMusic(themeMenuMusic);
         }
-        SDL_DestroyTexture(buttonPlaySpriteTexture); buttonPlaySpriteTexture = NULL;
-        SDL_DestroyTexture(buttonHTPSpriteTexture); buttonHTPSpriteTexture = NULL;
-        SDL_DestroyTexture(menuBackground); menuBackground = NULL;
+
 
 
 
         while(playAgain)
         {
+            quitPlayAgainMenu = false;
             ScrollingBackground background;
             background.setTexture(graphics.loadTexture(BACKGROUND_FILE));
 
@@ -553,10 +550,7 @@ int main(int argc, char *argv[])
                                             {
                                                 pause = false;
                                                 loss = true;
-                                                playAgain = false;
-                                                quit = true;
-                                                outGame = false;
-                                                quitPlayAgainMenu = false;
+                                                quitPlayAgainMenu = true;
                                             }
                                         }
                                         else
@@ -573,6 +567,8 @@ int main(int argc, char *argv[])
                                                 pause = false;
                                                 loss = true;
                                                 quitPlayAgainMenu = true;
+                                                playAgain = false;
+                                                quit = true;
                                             }
                                         }
                                         else
@@ -1329,10 +1325,109 @@ int main(int argc, char *argv[])
                     graphics.presentScene();
                 }
 
+                if(signName.length() == 0)
+                {
+                    signName = "Anonymous";
+                }
+                pair<string, string> player_pair = {signName, to_string(player.score)};
+                highScore.push_back(player_pair);
+
+                writeRankFile(highScore);
+
                 SDL_StopTextInput();
 
             }
+
+            SDL_DestroyTexture(scoreTexture); scoreTexture = NULL;
+            SDL_DestroyTexture(heartTexture); heartTexture = NULL;
+            SDL_DestroyTexture(skill_Q_having_num_Texture); skill_Q_having_num_Texture = NULL;
+            SDL_DestroyTexture(skill_W_having_num_Texture); skill_W_having_num_Texture = NULL;
+            SDL_DestroyTexture(skill_E_having_num_Texture); skill_E_having_num_Texture = NULL;
+            SDL_DestroyTexture(waitSpriteTexture); waitSpriteTexture = NULL;
+            SDL_DestroyTexture(playerSpriteTexture); playerSpriteTexture = NULL;
+            SDL_DestroyTexture(rankPlayerSpriteTexture); rankPlayerSpriteTexture = NULL;
+            SDL_DestroyTexture(playerSkill_Q_SpriteTexture); playerSkill_Q_SpriteTexture = NULL;
+            SDL_DestroyTexture(playerSkill_E_SpriteTexture); playerSkill_E_SpriteTexture = NULL;
+            SDL_DestroyTexture(botSpriteTexture); botSpriteTexture = NULL;
+            SDL_DestroyTexture(bossA_SpriteTexture); bossA_SpriteTexture = NULL;
+            SDL_DestroyTexture(bossB_SpriteTexture); bossB_SpriteTexture = NULL;
+            SDL_DestroyTexture(bossC_SpriteTexture); bossC_SpriteTexture = NULL;
+            SDL_DestroyTexture(bumbum_SpriteTexture); bumbum_SpriteTexture = NULL;
+            SDL_DestroyTexture(warnSpriteTexture); warnSpriteTexture = NULL;
+            SDL_DestroyTexture(playerBulletTexture); playerBulletTexture = NULL;
+            SDL_DestroyTexture(playerSkillWTexture); playerSkillWTexture = NULL;
+            SDL_DestroyTexture(botBulletTexture); botBulletTexture = NULL;
+            SDL_DestroyTexture(bossASkillTexture); bossASkillTexture = NULL;
+            SDL_DestroyTexture(bossBSkillTexture); bossBSkillTexture = NULL;
+            SDL_DestroyTexture(bossCSkillTexture); bossCSkillTexture = NULL;
+            SDL_DestroyTexture(bossCBulletSkillTexture); bossCBulletSkillTexture = NULL;
+            SDL_DestroyTexture(meteoriteTexture); meteoriteTexture = NULL;
+            SDL_DestroyTexture(icon_Q_Texture); icon_Q_Texture = NULL;
+            SDL_DestroyTexture(icon_Q_0_Texture); icon_Q_0_Texture = NULL;
+            SDL_DestroyTexture(icon_Q_item_Texture); icon_Q_item_Texture = NULL;
+            SDL_DestroyTexture(icon_W_Texture); icon_W_Texture = NULL;
+            SDL_DestroyTexture(icon_W_0_Texture); icon_W_0_Texture = NULL;
+            SDL_DestroyTexture(icon_W_item_Texture); icon_W_item_Texture = NULL;
+            SDL_DestroyTexture(icon_E_Texture); icon_E_Texture = NULL;
+            SDL_DestroyTexture(icon_E_0_Texture); icon_E_0_Texture = NULL;
+            SDL_DestroyTexture(icon_E_item_Texture); icon_E_item_Texture = NULL;
+            SDL_DestroyTexture(icon_Buff_item_Texture); icon_Buff_item_Texture = NULL;
+            SDL_DestroyTexture(icon_Cup_Texture); icon_Cup_Texture = NULL;
+            SDL_DestroyTexture(icon_Heart_Texture); icon_Heart_Texture = NULL;
+            SDL_DestroyTexture(icon_Score_Texture); icon_Score_Texture = NULL;
+            SDL_DestroyTexture(boomTexture); boomTexture = NULL;
+            SDL_DestroyTexture(redHPBarTexture); redHPBarTexture = NULL;
+            SDL_DestroyTexture(whiteHPBarTexture); whiteHPBarTexture = NULL;
+            SDL_DestroyTexture(pauseTexture); pauseTexture = NULL;
+//
+            if (playerShot != nullptr) {
+                Mix_FreeChunk(playerShot);
+            }
+
+            if (wShot != nullptr) {
+                Mix_FreeChunk(wShot);
+            }
+
+            if (botShot != nullptr) {
+                Mix_FreeChunk(botShot);
+            }
+
+            if (bossAShot != nullptr) {
+                Mix_FreeChunk(bossAShot);
+            }
+
+            if (bossBShot != nullptr) {
+                Mix_FreeChunk(bossBShot);
+            }
+
+            if (bossCShot != nullptr) {
+                Mix_FreeChunk(bossCShot);
+            }
         }
+        SDL_DestroyTexture(menuBackground); menuBackground = NULL;
+        SDL_DestroyTexture(buttonPlaySpriteTexture); buttonPlaySpriteTexture = NULL;
+        SDL_DestroyTexture(buttonHTPSpriteTexture); buttonHTPSpriteTexture = NULL;
+        SDL_DestroyTexture(buttonHighScoreSpriteTexture); buttonHighScoreSpriteTexture = NULL;
+        SDL_DestroyTexture(buttonReturnMenuSpriteTexture); buttonReturnMenuSpriteTexture = NULL;
+        SDL_DestroyTexture(rankSpriteTexture); rankSpriteTexture = NULL;
+        SDL_DestroyTexture(chooseAircraftSpriteTexture); chooseAircraftSpriteTexture = NULL;
+        SDL_DestroyTexture(guideTexture); guideTexture = NULL;
+        SDL_DestroyTexture(highScore_Box_Texture); highScore_Box_Texture = NULL;
+        SDL_DestroyTexture(preButtonTexture); preButtonTexture = NULL;
+        SDL_DestroyTexture(nextButtonTexture); nextButtonTexture = NULL;
+
+        TTF_CloseFont(size_30);
+        TTF_CloseFont(size_50);
+
+        for(int i = 0; i < 5; i++)
+        {
+            SDL_DestroyTexture(highScore_text_name[i]);
+            highScore_text_name[i] = NULL;
+            SDL_DestroyTexture(highScore_text_score[i]);
+            highScore_text_score[i] = NULL;
+        }
+
+
     }
     return 0;
 }
