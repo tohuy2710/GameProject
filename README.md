@@ -40,7 +40,7 @@ Galaxy Guardian (Vệ binh ngân hà) là game bắn súng 2D góc nhìn từ tr
 ![Aircraft](https://img.upanh.tv/2024/05/09/readme_aircraft.gif)
 > *Chuyển đổi Skin Phi thuyền*
 
-![Bots](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDE3eGZyZng3ZmIwd2s2ZGJ0cGQzbnc4dGY5cmt4eTZ3a3Z1cjE3YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Q5dfX3UmJFc68Lu42z/giphy.gif)
+![Bots](https://img.upanh.tv/2024/05/09/readme_bots27e6be0920cc46ac.gif)
 > *Các loại Bot lớn*
 
 ### Ngưỡng điểm cho là xứng đáng:  **9+**
