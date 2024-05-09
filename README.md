@@ -22,6 +22,8 @@ Galaxy Guardian (Vệ binh ngân hà) là game bắn súng 2D góc nhìn từ tr
 
 ### Cách chơi
 
+![QWE](https://img.upanh.tv/2024/05/09/readmi_1.gif)
+
 
 **Chuột**: Phi thuyền của bạn sẽ di chuyển theo con trỏ chuột
 **Sử dụng chiêu thức**: 
@@ -31,12 +33,14 @@ Galaxy Guardian (Vệ binh ngân hà) là game bắn súng 2D góc nhìn từ tr
 
 > Bạn sẽ nhận được thêm chiêu thức, buff tốc bắn và máu khi diệt Bot
 
-> Xếp hạng dựa trên điểm số bạn đạt được
-
-![](https://img.upanh.tv/2024/05/09/readmi_1.gif)
 ## Đồ họa
-![](https://img.upanh.tv/2024/05/09/readme_rank.gif)
-![](https://img.upanh.tv/2024/05/09/readme_aircraft.gif)
-![](https://img.upanh.tv/2024/05/09/readme_bots.gif)
+![Rank](https://img.upanh.tv/2024/05/09/readme_rank.gif)
+> *Xếp hạng dựa trên điểm số bạn đạt được*
+
+![Aircraft](https://img.upanh.tv/2024/05/09/readme_aircraft.gif)
+> *Chuyển đổi Skin Phi thuyền*
+
+![Bots](https://img.upanh.tv/2024/05/09/readme_bots.gif)
+> *Các loại Bot lớn*
 
 ### Ngưỡng điểm cho là xứng đáng:  **9+**
