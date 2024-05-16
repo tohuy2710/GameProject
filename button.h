@@ -7,9 +7,7 @@
 #include "defs.h"
 #include "ammo.h"
 #include "Bot.h"
-#include "item.h"
 #include "onTarget.h"
-#include "scoreTarget.h"
 
 
 struct Button

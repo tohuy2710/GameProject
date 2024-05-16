@@ -7,9 +7,7 @@
 #include "defs.h"
 #include "ammo.h"
 #include "Bot.h"
-#include "item.h"
 #include "onTarget.h"
-#include "scoreTarget.h"
 #include "button.h"
 using namespace std;
 
@@ -171,6 +169,7 @@ int main(int argc, char *argv[])
                 {
                     if(e.type == SDL_QUIT)
                     {
+                        readGuide = false;
                         quit_menu = true;
                     }
                     SDL_GetMouseState(&posMouse_x, &posMouse_y);

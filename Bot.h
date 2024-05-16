@@ -44,7 +44,6 @@ void initBotsWave(vector<Bots>& vectorBots) {
         botTmp.rect.w = 50;
         botTmp.rect.h = 50;
 
-        // Generate random position for the bot
         randomBotsPos(botTmp, preBotsPos);
 
 
