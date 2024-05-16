@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1714578830 source:c:\users\tohuy\huy\ltnc\game2\main.cpp
+1715755189 source:c:\users\tohuy\huy\ltnc\game2\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -42,7 +42,7 @@
 	"Bot.h"
 	"player.h"
 
-1715098232 c:\users\tohuy\huy\ltnc\game2\player.h
+1715153464 c:\users\tohuy\huy\ltnc\game2\player.h
 	"Graphics.h"
 	"ammo.h"
 	"Bot.h"

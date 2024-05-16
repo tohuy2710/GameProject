@@ -216,7 +216,6 @@ int main(int argc, char *argv[])
             graphics.renderSprite(buttonPlay.rect.x, buttonPlay.rect.y, buttonPlaySprite);
             graphics.presentScene();
         }
-        cout << "out loop\n";
 
         if(themeMenuMusic != nullptr)
         {
@@ -341,7 +340,7 @@ int main(int argc, char *argv[])
 
             Mix_Music* gamingTheme = graphics.loadMusic("assets2/gametheme.mp3");
             graphics.play(gamingTheme);
-            cerr << 1;
+
             Mix_Chunk* playerShot = graphics.loadSound("assets2/playerShot.wav");
             Mix_Chunk* wShot = graphics.loadSound("assets2/w.wav");
 
@@ -463,7 +462,6 @@ int main(int argc, char *argv[])
                         quit = true;
                         playAgain = false;
                         loss = true;
-                        cerr << "score: " << player.score << endl;
                     }
                     if(player.alive)
             //=====player=====
@@ -473,7 +471,6 @@ int main(int argc, char *argv[])
                             switch(e.key.keysym.sym)
                             {
                             case SDLK_q:
-                                cerr << "Q down\n";
                                 if(skill_Q_having && skillQ.active == false)
                                 {
                                     skillQ = initPlayerSkillQ(player);
@@ -482,7 +479,6 @@ int main(int argc, char *argv[])
 
                                 break;
                             case SDLK_w:
-                                cerr << "W down\n";
                                 if(skill_W_having && skill_W_using == false)
                                 {
                                     skill_W_using = true;
@@ -491,7 +487,6 @@ int main(int argc, char *argv[])
                                 }
                                 break;
                             case SDLK_e:
-                                cerr << "E down\n";
                                 if(skill_E_having && skill_E_using == false)
                                 {
                                     initBot_Skill_E(player, vectorBots_Skill_E);
@@ -504,9 +499,6 @@ int main(int argc, char *argv[])
                                 }
                                 break;
                             case SDLK_p:
-
-                                cerr << "P down\n";
-
                                 Sprite newGameSprite;
                                 SDL_Texture* newGameTexture = graphics.loadTexture(NEW_GAME_FILE);
                                 newGameSprite.init(newGameTexture, NEW_GAME_FRAMES, NEW_GAME_CLIPS);
@@ -633,7 +625,6 @@ int main(int argc, char *argv[])
                         time_current = SDL_GetTicks();
                         graphics.presentScene();
                     }
-                    cerr << "render\n";
                 }
 
             //====time Wave====
@@ -648,7 +639,6 @@ int main(int argc, char *argv[])
                         &&(existBigBot == false)
                             &&(time_current - time_clearWave >= time_waveDelay))
                 {
-                    cerr << "init Boss B\n";
                     BigBot = initBoss_B();
                     existBigBot = true;
                     countWaveBot++;
@@ -668,7 +658,6 @@ int main(int argc, char *argv[])
                             && (time_current - time_clearWave >= time_waveDelay))
 
                 {
-                    cerr << "init Boss C \n";
                     BigBot = initBoss_C();
                     existBigBot = true;
                     countWaveBot++;
@@ -695,7 +684,6 @@ int main(int argc, char *argv[])
                     waitNewWave = false;
 
                     initBoss_A_Skill(BigBot, vectorBigBotBullets);
-                    cerr << "init Boss A\n";
                     time_lastBotShot = time_current;
 
                     initHPBar_BigBot(hpBarWhite, hpBarRed, BigBot);
@@ -764,7 +752,7 @@ int main(int argc, char *argv[])
                                 if(checkCollision(vectorPlayerBullets[i].rect, BigBot.rect))
                                 {
                                     vectorPlayerBullets[i].active = false;
-                                    BigBot.hearts-= 1; cout << BigBot.hearts << endl;
+                                    BigBot.hearts-= 1;
                                 }
                             }
                         }
@@ -827,7 +815,6 @@ int main(int argc, char *argv[])
                     {
                         if(vectorPlayerBullets[j].active && checkCollision(vectorMeteorites[i].rect, vectorPlayerBullets[j].rect))
                         {
-                            cerr << "shot on meteo\n";
                             vectorMeteorites[i].active = false;
                             vectorPlayerBullets[j].active = false;
                             graphics.renderInRect(boomTexture, vectorMeteorites[i].rect);
@@ -1085,7 +1072,6 @@ int main(int argc, char *argv[])
                         numOfBots -= 1;
                         graphics.renderInRect(boomTexture, BigBot.rect);
                         initItem(BigBot, vectorItem);
-                        cout << "Big Bot die\n";
                     }
                 }
 
