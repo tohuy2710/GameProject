@@ -19,6 +19,16 @@ Galaxy Guardian (Vệ binh ngân hà) là game bắn súng 2D góc nhìn từ tr
 - Chuyển đổi skin phi thuyền
 - Pause game: Return Menu, New Game, Continue, hiển thị điểm để vào top High Score và điểm hiện tại của người chơi
 - Play Again-Menu: Sign Name - Lưu tên và điểm khi lọt top 5
+### Thuật toán trong trò chơi:
+- Sinh 1 loạt Bot ngẫu nhiên không bị trùng vị trí (hàm randomBotsPos trong Bot.h)
+- Thuật toán ra chiêu của Bots (trong Bot.h và main)
+- Sử dụng thời gian cho Player-Skill, Bots-Skill và Thiên thạch
+- Đạn bắn bay theo gia tốc, góc lệch:
+```cpp
+vectorPlayerBullets[i].speed += vectorPlayerBullets[i].acceleration;
+vectorPlayerBullets[i].rect.x += vectorPlayerBullets[i].speed * sin(vectorPlayerBullets[i].slope);
+vectorPlayerBullets[i].rect.y -= vectorPlayerBullets[i].speed * cos(vectorPlayerBullets[i].slope);
+```
 
 ### Cách chơi
 
@@ -36,7 +46,7 @@ Phi thuyền của bạn sẽ di chuyển theo con trỏ chuột
 
 > Bạn sẽ nhận được thêm chiêu thức, buff tốc bắn và máu khi diệt Bot
 
-## Đồ họa
+## Đồ họa:
 ![Rank](https://img.upanh.tv/2024/05/09/readme_rank.gif)
 > *Xếp hạng dựa trên điểm số bạn đạt được*
 
