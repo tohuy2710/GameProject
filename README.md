@@ -65,4 +65,4 @@ Phi thuyền của bạn sẽ di chuyển theo con trỏ chuột
 ![Screenshot-Gameplay](https://img.upanh.tv/2024/05/14/image19c0a5b62cf17291.png)
 > *Gaming !*
 
-### Ngưỡng điểm cho là xứng đáng:  **9+**
+### Điểm đã đạt được: 10.00
